@@ -5,118 +5,306 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A game website</title>
     <style>
-        body { background-color: #12131a; color: #ffffff; font-family: 'Segoe UI', -apple-system, sans-serif; margin: 0; padding: 0; }
-        header { background-color: #1c1d24; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #282a36; position: sticky; top: 0; z-index: 100; }
-        .header-left { display: flex; align-items: center; gap: 30px; }
-        header h1 { margin: 0; font-size: 20px; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
-        .nav-links { display: flex; gap: 25px; }
-        .nav-btn { display: flex; align-items: center; gap: 8px; color: #ffffff; text-transform: uppercase; font-weight: 700; font-size: 13px; cursor: pointer; opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
-        .nav-btn:hover { opacity: 1; color: #00f2fe; }
-        .search-wrapper { position: relative; display: flex; align-items: center; }
-        .search-input { background-color: #12131a; border: 1.5px solid #2d303f; border-radius: 20px; padding: 8px 15px 8px 38px; color: #ffffff; font-size: 13px; width: 210px; font-weight: 600; outline: none; transition: width 0.3s, border-color 0.3s; }
-        .search-input:focus { width: 300px; border-color: #4facfe; }
-        .search-input::placeholder { color: #575b70; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .search-icon-img { position: absolute; left: 14px; color: #575b70; font-size: 13px; pointer-events: none; }
-        .stage-container { max-width: 1040px; margin: 35px auto; padding: 0 20px; }
-        .display-window { background-color: #000000; border-radius: 8px; overflow: hidden; box-shadow: 0px 15px 35px rgba(0,0,0,0.8); border: 1px solid #1c1d24; }
-        #game-viewport { width: 100%; height: 560px; background-color: #000000; border: none; display: block; }
-        .viewport-idle-screen { color: #575b70; height: 560px; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #000000; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .display-footer-meta { background-color: #000000; border-top: 2px solid #12131a; padding: 14px 24px; display: none; justify-content: space-between; align-items: center; }
-        .meta-branding-left { display: flex; align-items: center; gap: 14px; }
-        .meta-avatar-slot { font-size: 28px; width: 44px; height: 44px; background-color: #12131a; border: 1.5px solid #2d303f; border-radius: 6px; display: flex; justify-content: center; align-items: center; }
-        .meta-text-block h3 { margin: 0; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
-        .meta-text-block p { margin: 3px 0 0 0; color: #575b70; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
-        .meta-metrics-right { display: flex; align-items: center; gap: 24px; }
-        .metric-action-node { cursor: pointer; font-size: 13px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 6px; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
-        .metric-action-node:hover { opacity: 1; color: #00f2fe; }
-        .grid-header-title { max-width: 1200px; margin: 50px auto 15px auto; padding: 0 20px; font-size: 18px; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
-        .dashboard-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto 60px auto; padding: 0 20px; }
-        .portal-card { background-color: #1c1d24; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid #282a36; text-align: center; padding-bottom: 15px; }
-        .portal-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-color: #4facfe; }
-        .portal-thumb-frame { width: 100%; height: 135px; background: linear-gradient(145deg, #23252f 0%, #12131a 100%); display: flex; justify-content: center; align-items: center; font-size: 42px; border-bottom: 1px solid #282a36; }
-        .portal-card h3 { margin: 14px 0 4px 0; font-size: 15px; color: #ffffff; font-weight: 700; }
-        .portal-card p { margin: 0; font-size: 11px; color: #575b70; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        /* Exact Core Color Scheme & Theme Palette */
+        body { 
+            background-color: #0f1115; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        /* 1. TOP HEADER NAVIGATION BAR */
+        header { 
+            background-color: #161920; 
+            padding: 14px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #232733;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .site-logo-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: capitalize;
+            cursor: pointer;
+        }
+
+        .nav-menu-tabs {
+            display: flex;
+            gap: 24px;
+        }
+
+        .tab-link-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ba3b2;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .tab-link-node:hover, .tab-link-node.active {
+            color: #ffffff;
+        }
+
+        /* Filter Search Box */
+        .search-engine-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-field-input {
+            background-color: #0f1115;
+            border: 1px solid #232733;
+            border-radius: 8px;
+            padding: 9px 16px 9px 40px;
+            color: #ffffff;
+            font-size: 13px;
+            width: 240px;
+            font-weight: 600;
+            outline: none;
+            transition: width 0.2s, border-color 0.2s;
+        }
+
+        .search-field-input:focus {
+            width: 320px;
+            border-color: #ff4757;
+        }
+
+        .search-field-input::placeholder {
+            color: #4b5263;
+            font-weight: 700;
+        }
+
+        .search-svg-icon {
+            position: absolute;
+            left: 14px;
+            color: #4b5263;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        /* 2. THE PIZZA EDITION SUB-CATEGORY MENU ROW (From /g link) */
+        .category-filter-row {
+            background-color: #161920;
+            border-bottom: 1px solid #232733;
+            padding: 12px 40px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .category-chip {
+            background-color: #232733;
+            color: #9ba3b2;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .category-chip:hover, .category-chip.active {
+            background-color: #ff4757;
+            color: #ffffff;
+        }
+
+        /* 3. SORTING UTILITY CONTROLS BAR (From /g link) */
+        .sorting-controls-bar {
+            max-width: 1200px;
+            margin: 25px auto 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #4b5263;
+        }
+
+        .sort-label {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sort-options-cluster {
+            display: flex;
+            gap: 15px;
+        }
+
+        .sort-node {
+            color: #9ba3b2;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .sort-node:hover, .sort-node.active {
+            color: #ffffff;
+        }
+
+        /* 4. MAIN DYNAMIC GAME CONTAINER PLAYER STAGE */
+        .stage-viewport-area { 
+            max-width: 1060px; 
+            margin: 20px auto 30px auto; 
+            padding: 0 20px; 
+        }
+
+        .viewport-wrapper {
+            background-color: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 20px 45px rgba(0,0,0,0.6);
+            border: 1px solid #161920;
+        }
+
+        #live-frame-viewport { 
+            width: 100%; 
+            height: 580px; 
+            background-color: #000000; 
+            border: none;
+            display: block;
+        }
+
+        .idle-splash-screen { 
+            color: #4b5263; 
+            height: 580px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px; 
+            background: #060709; 
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .viewport-meta-drawer {
+            background-color: #060709;
+            border-top: 1px solid #161920;
+            padding: 16px 24px;
+            display: none; 
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .meta-identity-block { display: flex; align-items: center; gap: 15px; }
+        .meta-avatar-badge { font-size: 26px; width: 46px; height: 46px; background-color: #161920; border: 1px solid #232733; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+        .meta-title-text h3 { margin: 0; color: #ffffff; font-size: 16px; font-weight: 700; }
+        .meta-title-text p { margin: 4px 0 0 0; color: #4b5263; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .meta-utilities-cluster { display: flex; align-items: center; gap: 20px; }
+        .utility-action-node { cursor: pointer; font-size: 13px; font-weight: 700; color: #9ba3b2; display: flex; align-items: center; gap: 6px; }
+        .utility-action-node:hover { color: #ffffff; }
+
+        /* 5. EXPANSIVE GAME COMPENDIUM GRID SYSTEM */
+        .compendium-dashboard-matrix { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 20px auto 60px auto; 
+            padding: 0 20px; 
+        }
+
+        .game-directory-card { 
+            background-color: #161920; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: transform 0.2s, background-color 0.2s; 
+            border: 1px solid #232733; 
+            text-align: left; 
+            padding-bottom: 14px; 
+        }
+
+        .game-directory-card:hover { 
+            transform: translateY(-4px); 
+            background-color: #1c2029;
+            border-color: #2d3345;
+        }
+
+        .game-card-thumbnail-box { 
+            width: 100%; 
+            height: 125px; 
+            background: linear-gradient(135deg, #1c2029 0%, #0f1115 100%);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 40px; 
+            border-bottom: 1px solid #232733;
+        }
+
+        .game-directory-card h3 { 
+            margin: 12px 16px 4px 16px; 
+            font-size: 14px; 
+            color: #ffffff; 
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-directory-card p { 
+            margin: 0 16px; 
+            font-size: 11px; 
+            color: #4b5263; 
+            text-transform: uppercase;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
+
+    <!-- 1. NAVIGATION HEADER -->
     <header>
         <div class="header-left">
-            <h1>👾 A game website</h1>
-            <div class="nav-links">
-                <div class="nav-btn">🔥 Popular</div>
-                <div class="nav-btn">🕹️ Games</div>
+            <div class="site-logo-brand" onclick="window.location.reload()">🍕 A game website</div>
+            <div class="nav-menu-tabs">
+                <div class="tab-link-node">🔥 Popular</div>
+                <div class="tab-link-node active">🕹️ Games</div>
             </div>
         </div>
-        <div class="search-wrapper">
-            <span class="search-icon-img">🔍</span>
-            <input type="text" class="search-input" id="directory-search" placeholder="Search For Games" onkeyup="searchGameEngine()">
+        
+        <div class="search-engine-box">
+            <span class="search-svg-icon">🔍</span>
+            <input type="text" class="search-field-input" id="directory-search-input" placeholder="Search for games..." onkeyup="executeGlobalSearch()">
         </div>
     </header>
-    <div class="stage-container">
-        <div class="display-window">
-            <div id="canvas-target-area">
-                <div class="viewport-idle-screen">Select an arcade dashboard terminal below to run...</div>
-            </div>
-            <div class="display-footer-meta" id="interactive-meta-bar">
-                <div class="meta-branding-left">
-                    <div class="meta-avatar-slot" id="live-emoji-slot"><span>🎮</span></div>
-                    <div class="meta-text-block">
-                        <h3 id="live-title-slot">Game Title</h3>
-                        <p id="live-author-slot">BY: DEVELOPER</p>
-                    </div>
-                </div>
-                <div class="meta-metrics-right">
-                    <div class="metric-action-node">👍 <span id="val-likes">4.3K</span></div>
-                    <div class="metric-action-node">👎 <span id="val-dislikes">605</span></div>
-                    <div class="metric-action-node" onclick="triggerFullscreen()">Fullscreen ⛶</div>
-                </div>
-            </div>
-        </div>
+
+    <!-- 2. SUB-CATEGORY FILTER BAR MODULE (From /g setup) -->
+    <div class="category-filter-row">
+        <span class="category-chip active" onclick="filterByCategory('all')">All</span>
+        <span class="category-chip" onclick="filterByCategory('action')">Action</span>
+        <span class="category-chip" onclick="filterByCategory('racing')">Racing</span>
+        <span class="category-chip" onclick="filterByCategory('sports')">Sports</span>
+        <span class="category-chip" onclick="filterByCategory('puzzle')">Puzzle</span>
+        <span class="category-chip" onclick="filterByCategory('platformer')">Platformer</span>
+        <span class="category-chip" onclick="filterByCategory('shooter')">Shooter</span>
+        <span class="category-chip" onclick="filterByCategory('2 player')">2 Player</span>
+        <span class="category-chip" onclick="filterByCategory('clicker & idle')">Clicker & Idle</span>
+        <span class="category-chip" onclick="filterByCategory('horror')">Horror</span>
     </div>
-    <h2 class="grid-header-title">All Portal Terminals</h2>
-    <div class="dashboard-matrix" id="portal-grid">
-        <div class="portal-card" onclick="initializeGame('https://github.io', 'Retro Bowl', 'New Star Games', '🏈')">
-            <div class="portal-thumb-frame">🏈</div>
-            <h3>Retro Bowl</h3>
-            <p>Sports</p>
-        </div>
-        <div class="portal-card" onclick="initializeGame('https://github.io', 'Moto X3M', 'Madpuffers', '🏍️')">
-            <div class="portal-thumb-frame">🏍️</div>
-            <h3>Moto X3M</h3>
-            <p>Racing</p>
-        </div>
-        <div class="portal-card" onclick="initializeGame('https://github.io', 'Slope', 'Y8 Games', '🔴')">
-            <div class="portal-thumb-frame">🔴</div>
-            <h3>Slope</h3>
-            <p>Skill</p>
-        </div>
-    </div>
-    <script>
-        function initializeGame(targetUrl, title, developer, thumbnail) {
-            document.getElementById('canvas-target-area').innerHTML = `<iframe id="game-viewport" src="${targetUrl}" allowfullscreen></iframe>`;
-            document.getElementById('live-title-slot').innerText = title;
-            document.getElementById('live-author-slot').innerText = `BY: ${developer.toUpperCase()}`;
-            document.getElementById('live-emoji-slot').innerHTML = `<span>${thumbnail}</span>`;
-            document.getElementById('val-likes').innerText = (Math.random() * 4 + 2).toFixed(1) + "K";
-            document.getElementById('val-dislikes').innerText = Math.floor(Math.random() * 400 + 200);
-            document.getElementById('interactive-meta-bar').style.display = 'flex';
-        }
-        function searchGameEngine() {
-            let filterTerm = document.getElementById('directory-search').value.toLowerCase();
-            let cards = document.getElementsByClassName('portal-card');
-            for (let i = 0; i < cards.length; i++) {
-                let checkTitle = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                if (checkTitle.includes(filterTerm)) { cards[i].style.display = ""; } else { cards[i].style.display = "none"; }
-            }
-        }
-        function triggerFullscreen() {
-            let frame = document.getElementById('game-viewport');
-            if (frame) {
-                if (frame.requestFullscreen) { frame.requestFullscreen(); }
-                else if (frame.webkitRequestFullscreen) { frame.webkitRequestFullscreen(); }
-                else if (frame.msRequestFullscreen) { frame.msRequestFullscreen(); }
-            } else { alert("Please select and load a game before initializing full screen mode."); }
-        }
-    </script>
-</body>
-</html>
+
+    <!-- 3. SORT TOOL ROW MODULE (From /g setup) -->
+    <div class="sorting-controls-bar">
+        <span class="sort-label">Sort:</span>
+        <div class="sort-options-cluster">
+            <span class="sort-node active" onclick="sortGames('az')">A-Z</span>
+            <span class="sort-node" onclick="sortGames('new')">Newest</span>
