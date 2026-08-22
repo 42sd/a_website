@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A game website</title>
     <style>
-        /* Core Palette Theme */
+        /* Exact Core Color Scheme & Theme Palette */
         body { 
             background-color: #0f1115; 
             color: #ffffff; 
@@ -14,7 +14,7 @@
             padding: 0; 
         }
 
-        /* Header Setup Bar */
+        /* 1. TOP HEADER NAVIGATION BAR */
         header { 
             background-color: #161920; 
             padding: 14px 40px; 
@@ -62,7 +62,7 @@
             color: #ffffff;
         }
 
-        /* Filter Search Box Layout */
+        /* Filter Search Box */
         .search-engine-box {
             position: relative;
             display: flex;
@@ -100,7 +100,7 @@
             pointer-events: none;
         }
 
-        /* Sub-Category Multi-Menu row */
+        /* 2. SUB-CATEGORY MENU ROW */
         .category-filter-row {
             background-color: #161920;
             border-bottom: 1px solid #232733;
@@ -127,7 +127,7 @@
             color: #ffffff;
         }
 
-        /* Live Viewport Screen Arena */
+        /* 3. MAIN DYNAMIC GAME CONTAINER PLAYER STAGE */
         .stage-viewport-area { 
             max-width: 1060px; 
             margin: 20px auto 30px auto; 
@@ -192,7 +192,7 @@
         .utility-action-node:hover { color: #ffffff; }
         .utility-action-node.voted { color: #ff4757; }
 
-        /* Core Game Card Matrix Display Grid Container */
+        /* 4. EXPANSIVE GAME COMPENDIUM GRID SYSTEM */
         .compendium-dashboard-matrix { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
@@ -251,7 +251,7 @@
 </head>
 <body>
 
-    <!-- Header Block Component -->
+    <!-- Header Component -->
     <header>
         <div class="header-left">
             <div class="site-logo-brand" onclick="window.location.reload()">🍕 A game website</div>
@@ -267,7 +267,7 @@
         </div>
     </header>
 
-    <!-- Category Toolbar Navigation Panel Row -->
+    <!-- Category Tabs Filter Row -->
     <div class="category-filter-row">
         <span class="category-chip active" onclick="filterByCategory('all')">All</span>
         <span class="category-chip" onclick="filterByCategory('action')">Action</span>
@@ -276,11 +276,11 @@
         <span class="category-chip" onclick="filterByCategory('platformer')">Platformer</span>
     </div>
 
-    <!-- Live Streaming Video Area Viewport -->
+    <!-- Active Stage Player Screen -->
     <div class="stage-viewport-area">
         <div class="viewport-wrapper">
             <div id="runtime-canvas-injection-point">
-                <div class="idle-splash-screen">Select an arcade portal terminal matrix block to boot stream...</div>
+                <div class="idle-splash-screen">Select an arcade game card below to load the engine...</div>
             </div>
             
             <div class="viewport-meta-drawer" id="runtime-metadata-drawer">
@@ -300,6 +300,7 @@
         </div>
     </div>
 
-    <!-- THE GAME CARD HOUSING CONTAINER MATRIX GRID -->
+    <!-- 18 FULLY WORKING HARDCODED OPEN SOURCE GAME CARDS -->
     <div class="compendium-dashboard-matrix" id="directory-cards-grid">
 
+        <!-- SPORTS -->
