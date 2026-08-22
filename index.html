@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A game website</title>
     <style>
-        /* Exact Core Color Scheme & Theme Palette */
+        /* Core Palette Theme */
         body { 
             background-color: #0f1115; 
             color: #ffffff; 
@@ -14,7 +14,7 @@
             padding: 0; 
         }
 
-        /* 1. TOP HEADER NAVIGATION BAR */
+        /* Header Setup Bar */
         header { 
             background-color: #161920; 
             padding: 14px 40px; 
@@ -62,7 +62,7 @@
             color: #ffffff;
         }
 
-        /* Filter Search Box */
+        /* Filter Search Box Layout */
         .search-engine-box {
             position: relative;
             display: flex;
@@ -100,7 +100,7 @@
             pointer-events: none;
         }
 
-        /* 2. THE PIZZA EDITION SUB-CATEGORY MENU ROW (From /g link) */
+        /* Sub-Category Multi-Menu row */
         .category-filter-row {
             background-color: #161920;
             border-bottom: 1px solid #232733;
@@ -127,40 +127,7 @@
             color: #ffffff;
         }
 
-        /* 3. SORTING UTILITY CONTROLS BAR (From /g link) */
-        .sorting-controls-bar {
-            max-width: 1200px;
-            margin: 25px auto 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #4b5263;
-        }
-
-        .sort-label {
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sort-options-cluster {
-            display: flex;
-            gap: 15px;
-        }
-
-        .sort-node {
-            color: #9ba3b2;
-            cursor: pointer;
-            transition: color 0.15s;
-        }
-
-        .sort-node:hover, .sort-node.active {
-            color: #ffffff;
-        }
-
-        /* 4. MAIN DYNAMIC GAME CONTAINER PLAYER STAGE */
+        /* Live Viewport Screen Arena */
         .stage-viewport-area { 
             max-width: 1060px; 
             margin: 20px auto 30px auto; 
@@ -210,16 +177,28 @@
         .meta-title-text h3 { margin: 0; color: #ffffff; font-size: 16px; font-weight: 700; }
         .meta-title-text p { margin: 4px 0 0 0; color: #4b5263; font-size: 11px; font-weight: 700; text-transform: uppercase; }
         .meta-utilities-cluster { display: flex; align-items: center; gap: 20px; }
-        .utility-action-node { cursor: pointer; font-size: 13px; font-weight: 700; color: #9ba3b2; display: flex; align-items: center; gap: 6px; }
+        
+        .utility-action-node { 
+            cursor: pointer; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #9ba3b2; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            user-select: none;
+        }
+        
         .utility-action-node:hover { color: #ffffff; }
+        .utility-action-node.voted { color: #ff4757; }
 
-        /* 5. EXPANSIVE GAME COMPENDIUM GRID SYSTEM */
+        /* Core Game Card Matrix Display Grid Container */
         .compendium-dashboard-matrix { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
             gap: 20px; 
             max-width: 1200px; 
-            margin: 20px auto 60px auto; 
+            margin: 40px auto 60px auto; 
             padding: 0 20px; 
         }
 
@@ -272,7 +251,7 @@
 </head>
 <body>
 
-    <!-- 1. NAVIGATION HEADER -->
+    <!-- Header Block Component -->
     <header>
         <div class="header-left">
             <div class="site-logo-brand" onclick="window.location.reload()">🍕 A game website</div>
@@ -288,23 +267,39 @@
         </div>
     </header>
 
-    <!-- 2. SUB-CATEGORY FILTER BAR MODULE (From /g setup) -->
+    <!-- Category Toolbar Navigation Panel Row -->
     <div class="category-filter-row">
         <span class="category-chip active" onclick="filterByCategory('all')">All</span>
         <span class="category-chip" onclick="filterByCategory('action')">Action</span>
         <span class="category-chip" onclick="filterByCategory('racing')">Racing</span>
         <span class="category-chip" onclick="filterByCategory('sports')">Sports</span>
-        <span class="category-chip" onclick="filterByCategory('puzzle')">Puzzle</span>
         <span class="category-chip" onclick="filterByCategory('platformer')">Platformer</span>
-        <span class="category-chip" onclick="filterByCategory('shooter')">Shooter</span>
-        <span class="category-chip" onclick="filterByCategory('2 player')">2 Player</span>
-        <span class="category-chip" onclick="filterByCategory('clicker & idle')">Clicker & Idle</span>
-        <span class="category-chip" onclick="filterByCategory('horror')">Horror</span>
     </div>
 
-    <!-- 3. SORT TOOL ROW MODULE (From /g setup) -->
-    <div class="sorting-controls-bar">
-        <span class="sort-label">Sort:</span>
-        <div class="sort-options-cluster">
-            <span class="sort-node active" onclick="sortGames('az')">A-Z</span>
-            <span class="sort-node" onclick="sortGames('new')">Newest</span>
+    <!-- Live Streaming Video Area Viewport -->
+    <div class="stage-viewport-area">
+        <div class="viewport-wrapper">
+            <div id="runtime-canvas-injection-point">
+                <div class="idle-splash-screen">Select an arcade portal terminal matrix block to boot stream...</div>
+            </div>
+            
+            <div class="viewport-meta-drawer" id="runtime-metadata-drawer">
+                
+                    <div class="meta-avatar-badge" id="live-card-emoji">🎮</div>
+                    <div class="meta-text-block">
+                        <h3 id="live-card-title">Game Core</h3>
+                        <p id="live-card-category">CATEGORY: ARCADE</p>
+                    </div>
+                </div>
+                <div class="meta-utilities-cluster">
+                    <div class="utility-action-node" id="like-btn" onclick="handleVote('like')">👍 <span id="val-likes-ticker">0</span></div>
+                    <div class="utility-action-node" id="dislike-btn" onclick="handleVote('dislike')">👎 <span id="val-dislikes-ticker">0</span></div>
+                    <div class="utility-action-node" onclick="bootFullscreenMode()" style="cursor: pointer; color: #ff4757;">Fullscreen ⛶</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- THE GAME CARD HOUSING CONTAINER MATRIX GRID -->
+    <div class="compendium-dashboard-matrix" id="directory-cards-grid">
+
