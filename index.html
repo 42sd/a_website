@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A game website</title>
+    <style>
+        body { background-color: #12131a; color: #ffffff; font-family: 'Segoe UI', -apple-system, sans-serif; margin: 0; padding: 0; }
+        header { background-color: #1c1d24; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #282a36; position: sticky; top: 0; z-index: 100; }
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        header h1 { margin: 0; font-size: 20px; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
+        .nav-links { display: flex; gap: 25px; }
+        .nav-btn { display: flex; align-items: center; gap: 8px; color: #ffffff; text-transform: uppercase; font-weight: 700; font-size: 13px; cursor: pointer; opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
+        .nav-btn:hover { opacity: 1; color: #00f2fe; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-input { background-color: #12131a; border: 1.5px solid #2d303f; border-radius: 20px; padding: 8px 15px 8px 38px; color: #ffffff; font-size: 13px; width: 210px; font-weight: 600; outline: none; transition: width 0.3s, border-color 0.3s; }
+        .search-input:focus { width: 300px; border-color: #4facfe; }
+        .search-input::placeholder { color: #575b70; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .search-icon-img { position: absolute; left: 14px; color: #575b70; font-size: 13px; pointer-events: none; }
+        .stage-container { max-width: 1040px; margin: 35px auto; padding: 0 20px; }
+        .display-window { background-color: #000000; border-radius: 8px; overflow: hidden; box-shadow: 0px 15px 35px rgba(0,0,0,0.8); border: 1px solid #1c1d24; }
+        #game-viewport { width: 100%; height: 560px; background-color: #000000; border: none; display: block; }
+        .viewport-idle-screen { color: #575b70; height: 560px; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #000000; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .display-footer-meta { background-color: #000000; border-top: 2px solid #12131a; padding: 14px 24px; display: none; justify-content: space-between; align-items: center; }
+        .meta-branding-left { display: flex; align-items: center; gap: 14px; }
+        .meta-avatar-slot { font-size: 28px; width: 44px; height: 44px; background-color: #12131a; border: 1.5px solid #2d303f; border-radius: 6px; display: flex; justify-content: center; align-items: center; }
+        .meta-text-block h3 { margin: 0; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+        .meta-text-block p { margin: 3px 0 0 0; color: #575b70; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+        .meta-metrics-right { display: flex; align-items: center; gap: 24px; }
+        .metric-action-node { cursor: pointer; font-size: 13px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 6px; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+        .metric-action-node:hover { opacity: 1; color: #00f2fe; }
+        .grid-header-title { max-width: 1200px; margin: 50px auto 15px auto; padding: 0 20px; font-size: 18px; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+        .dashboard-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto 60px auto; padding: 0 20px; }
+        .portal-card { background-color: #1c1d24; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid #282a36; text-align: center; padding-bottom: 15px; }
+        .portal-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-color: #4facfe; }
+        .portal-thumb-frame { width: 100%; height: 135px; background: linear-gradient(145deg, #23252f 0%, #12131a 100%); display: flex; justify-content: center; align-items: center; font-size: 42px; border-bottom: 1px solid #282a36; }
+        .portal-card h3 { margin: 14px 0 4px 0; font-size: 15px; color: #ffffff; font-weight: 700; }
+        .portal-card p { margin: 0; font-size: 11px; color: #575b70; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>👾 A game website</h1>
+            <div class="nav-links">
+                <div class="nav-btn">🔥 Popular</div>
+                <div class="nav-btn">🕹️ Games</div>
+            </div>
+        </div>
+        <div class="search-wrapper">
+            <span class="search-icon-img">🔍</span>
+            <input type="text" class="search-input" id="directory-search" placeholder="Search For Games" onkeyup="searchGameEngine()">
+        </div>
+    </header>
+    <div class="stage-container">
+        <div class="display-window">
+            <div id="canvas-target-area">
+                <div class="viewport-idle-screen">Select an arcade dashboard terminal below to run...</div>
+            </div>
+            <div class="display-footer-meta" id="interactive-meta-bar">
+                <div class="meta-branding-left">
+                    <div class="meta-avatar-slot" id="live-emoji-slot"><span>🎮</span></div>
+                    <div class="meta-text-block">
+                        <h3 id="live-title-slot">Game Title</h3>
+                        <p id="live-author-slot">BY: DEVELOPER</p>
+                    </div>
+                </div>
+                <div class="meta-metrics-right">
+                    <div class="metric-action-node">👍 <span id="val-likes">4.3K</span></div>
+                    <div class="metric-action-node">👎 <span id="val-dislikes">605</span></div>
+                    <div class="metric-action-node" onclick="triggerFullscreen()">Fullscreen ⛶</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="grid-header-title">All Portal Terminals</h2>
+    <div class="dashboard-matrix" id="portal-grid">
+        <div class="portal-card" onclick="initializeGame('https://github.io', 'Retro Bowl', 'New Star Games', '🏈')">
+            <div class="portal-thumb-frame">🏈</div>
+            <h3>Retro Bowl</h3>
+            <p>Sports</p>
+        </div>
+        <div class="portal-card" onclick="initializeGame('https://github.io', 'Moto X3M', 'Madpuffers', '🏍️')">
+            <div class="portal-thumb-frame">🏍️</div>
+            <h3>Moto X3M</h3>
+            <p>Racing</p>
+        </div>
+        <div class="portal-card" onclick="initializeGame('https://github.io', 'Slope', 'Y8 Games', '🔴')">
+            <div class="portal-thumb-frame">🔴</div>
+            <h3>Slope</h3>
+            <p>Skill</p>
+        </div>
+    </div>
+    <script>
+        function initializeGame(targetUrl, title, developer, thumbnail) {
+            document.getElementById('canvas-target-area').innerHTML = `<iframe id="game-viewport" src="${targetUrl}" allowfullscreen></iframe>`;
+            document.getElementById('live-title-slot').innerText = title;
+            document.getElementById('live-author-slot').innerText = `BY: ${developer.toUpperCase()}`;
+            document.getElementById('live-emoji-slot').innerHTML = `<span>${thumbnail}</span>`;
+            document.getElementById('val-likes').innerText = (Math.random() * 4 + 2).toFixed(1) + "K";
+            document.getElementById('val-dislikes').innerText = Math.floor(Math.random() * 400 + 200);
+            document.getElementById('interactive-meta-bar').style.display = 'flex';
+        }
+        function searchGameEngine() {
+            let filterTerm = document.getElementById('directory-search').value.toLowerCase();
+            let cards = document.getElementsByClassName('portal-card');
+            for (let i = 0; i < cards.length; i++) {
+                let checkTitle = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                if (checkTitle.includes(filterTerm)) { cards[i].style.display = ""; } else { cards[i].style.display = "none"; }
+            }
+        }
+        function triggerFullscreen() {
+            let frame = document.getElementById('game-viewport');
+            if (frame) {
+                if (frame.requestFullscreen) { frame.requestFullscreen(); }
+                else if (frame.webkitRequestFullscreen) { frame.webkitRequestFullscreen(); }
+                else if (frame.msRequestFullscreen) { frame.msRequestFullscreen(); }
+            } else { alert("Please select and load a game before initializing full screen mode."); }
+        }
+    </script>
+</body>
+</html>
