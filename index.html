@@ -1,306 +1,89 @@
-<!DOCTYPE html>
+html<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A game website</title>
     <style>
-        /* Exact Core Color Scheme & Theme Palette */
-        body { 
-            background-color: #0f1115; 
-            color: #ffffff; 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-        }
-
-        /* 1. TOP HEADER NAVIGATION BAR */
-        header { 
-            background-color: #161920; 
-            padding: 14px 40px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #232733;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 35px;
-        }
-
-        .site-logo-brand {
-            font-size: 20px;
-            font-weight: 800;
-            color: #ffffff;
-            text-transform: capitalize;
-            cursor: pointer;
-        }
-
-        .nav-menu-tabs {
-            display: flex;
-            gap: 24px;
-        }
-
-        .tab-link-node {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #9ba3b2;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .tab-link-node:hover, .tab-link-node.active {
-            color: #ffffff;
-        }
-
-        /* Filter Search Box */
-        .search-engine-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-field-input {
-            background-color: #0f1115;
-            border: 1px solid #232733;
-            border-radius: 8px;
-            padding: 9px 16px 9px 40px;
-            color: #ffffff;
-            font-size: 13px;
-            width: 240px;
-            font-weight: 600;
-            outline: none;
-            transition: width 0.2s, border-color 0.2s;
-        }
-
-        .search-field-input:focus {
-            width: 320px;
-            border-color: #ff4757;
-        }
-
-        .search-field-input::placeholder {
-            color: #4b5263;
-            font-weight: 700;
-        }
-
-        .search-svg-icon {
-            position: absolute;
-            left: 14px;
-            color: #4b5263;
-            font-size: 13px;
-            pointer-events: none;
-        }
-
-        /* 2. SUB-CATEGORY MENU ROW */
-        .category-filter-row {
-            background-color: #161920;
-            border-bottom: 1px solid #232733;
-            padding: 12px 40px;
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .category-chip {
-            background-color: #232733;
-            color: #9ba3b2;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        .category-chip:hover, .category-chip.active {
-            background-color: #ff4757;
-            color: #ffffff;
-        }
-
-        /* 3. MAIN DYNAMIC GAME CONTAINER PLAYER STAGE */
-        .stage-viewport-area { 
-            max-width: 1060px; 
-            margin: 20px auto 30px auto; 
-            padding: 0 20px; 
-        }
-
-        .viewport-wrapper {
-            background-color: #000000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0px 20px 45px rgba(0,0,0,0.6);
-            border: 1px solid #161920;
-        }
-
-        #live-frame-viewport { 
-            width: 100%; 
-            height: 580px; 
-            background-color: #000000; 
-            border: none;
-            display: block;
-        }
-
-        .idle-splash-screen { 
-            color: #4b5263; 
-            height: 580px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px; 
-            background: #060709; 
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .viewport-meta-drawer {
-            background-color: #060709;
-            border-top: 1px solid #161920;
-            padding: 16px 24px;
-            display: none; 
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        body { background-color: #0f1115; color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+        header { background-color: #161920; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232733; position: sticky; top: 0; z-index: 100; }
+        .header-left { display: flex; align-items: center; gap: 35px; }
+        .site-logo-brand { font-size: 20px; font-weight: 800; color: #ffffff; text-transform: capitalize; cursor: pointer; }
+        .search-engine-box { position: relative; display: flex; align-items: center; }
+        .search-field-input { background-color: #0f1115; border: 1px solid #232733; border-radius: 8px; padding: 9px 16px 9px 40px; color: #ffffff; font-size: 13px; width: 240px; font-weight: 600; outline: none; }
+        .search-svg-icon { position: absolute; left: 14px; color: #4b5263; font-size: 13px; pointer-events: none; }
+        .stage-viewport-area { max-width: 1060px; margin: 20px auto 30px auto; padding: 0 20px; }
+        .viewport-wrapper { background-color: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0px 20px 45px rgba(0,0,0,0.6); border: 1px solid #161920; }
+        #live-frame-viewport { width: 100%; height: 580px; background-color: #000000; border: none; display: block; }
+        .idle-splash-screen { color: #4b5263; height: 580px; display: flex; justify-content: center; align-items: center; font-size: 16px; background: #060709; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .viewport-meta-drawer { background-color: #060709; border-top: 1px solid #161920; padding: 16px 24px; display: none; justify-content: space-between; align-items: center; }
         .meta-identity-block { display: flex; align-items: center; gap: 15px; }
         .meta-avatar-badge { font-size: 26px; width: 46px; height: 46px; background-color: #161920; border: 1px solid #232733; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
         .meta-title-text h3 { margin: 0; color: #ffffff; font-size: 16px; font-weight: 700; }
         .meta-title-text p { margin: 4px 0 0 0; color: #4b5263; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .meta-utilities-cluster { display: flex; align-items: center; gap: 20px; }
-        
-        .utility-action-node { 
-            cursor: pointer; 
-            font-size: 13px; 
-            font-weight: 700; 
-            color: #9ba3b2; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            user-select: none;
-        }
-        
-        .utility-action-node:hover { color: #ffffff; }
-        .utility-action-node.voted { color: #ff4757; }
-
-        /* 4. EXPANSIVE GAME COMPENDIUM GRID SYSTEM */
-        .compendium-dashboard-matrix { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-            gap: 20px; 
-            max-width: 1200px; 
-            margin: 40px auto 60px auto; 
-            padding: 0 20px; 
-        }
-
-        .game-directory-card { 
-            background-color: #161920; 
-            border-radius: 10px; 
-            overflow: hidden; 
-            cursor: pointer; 
-            transition: transform 0.2s, background-color 0.2s; 
-            border: 1px solid #232733; 
-            text-align: left; 
-            padding-bottom: 14px; 
-        }
-
-        .game-directory-card:hover { 
-            transform: translateY(-4px); 
-            background-color: #1c2029;
-            border-color: #2d3345;
-        }
-
-        .game-card-thumbnail-box { 
-            width: 100%; 
-            height: 125px; 
-            background: linear-gradient(135deg, #1c2029 0%, #0f1115 100%);
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 40px; 
-            border-bottom: 1px solid #232733;
-        }
-
-        .game-directory-card h3 { 
-            margin: 12px 16px 4px 16px; 
-            font-size: 14px; 
-            color: #ffffff; 
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .game-directory-card p { 
-            margin: 0 16px; 
-            font-size: 11px; 
-            color: #4b5263; 
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+        .compendium-dashboard-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; max-width: 1200px; margin: 40px auto 60px auto; padding: 0 20px; }
+        .game-directory-card { background-color: #161920; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, background-color 0.2s; border: 1px solid #232733; text-align: left; padding-bottom: 14px; }
+        .game-directory-card:hover { transform: translateY(-4px); background-color: #1c2029; border-color: #2d3345; }
+        .game-card-thumbnail-box { width: 100%; height: 125px; background: linear-gradient(135deg, #1c2029 0%, #0f1115 100%); display: flex; justify-content: center; align-items: center; font-size: 40px; border-bottom: 1px solid #232733; }
+        .game-directory-card h3 { margin: 12px 16px 4px 16px; font-size: 14px; color: #ffffff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .game-directory-card p { margin: 0 16px; font-size: 11px; color: #4b5263; text-transform: uppercase; font-weight: 700; }
     </style>
 </head>
 <body>
-
-    <!-- Header Component -->
     <header>
         <div class="header-left">
             <div class="site-logo-brand" onclick="window.location.reload()">🍕 A game website</div>
-            <div class="nav-menu-tabs">
-                <div class="tab-link-node">🔥 Popular</div>
-                <div class="tab-link-node active">🕹️ Games</div>
-            </div>
         </div>
-        
         <div class="search-engine-box">
             <span class="search-svg-icon">🔍</span>
             <input type="text" class="search-field-input" id="directory-search-input" placeholder="Search for games..." onkeyup="executeGlobalSearch()">
         </div>
     </header>
 
-    <!-- Category Tabs Filter Row -->
-    <div class="category-filter-row">
-        <span class="category-chip active" onclick="filterByCategory('all')">All</span>
-        <span class="category-chip" onclick="filterByCategory('action')">Action</span>
-        <span class="category-chip" onclick="filterByCategory('racing')">Racing</span>
-        <span class="category-chip" onclick="filterByCategory('sports')">Sports</span>
-        <span class="category-chip" onclick="filterByCategory('platformer')">Platformer</span>
-    </div>
-
-    <!-- Active Stage Player Screen -->
     <div class="stage-viewport-area">
         <div class="viewport-wrapper">
             <div id="runtime-canvas-injection-point">
-                <div class="idle-splash-screen">Select an arcade game card below to load the engine...</div>
+                <div class="idle-splash-screen">Select an arcade game package below...</div>
             </div>
-            
             <div class="viewport-meta-drawer" id="runtime-metadata-drawer">
                 
                     <div class="meta-avatar-badge" id="live-card-emoji">🎮</div>
                     <div class="meta-text-block">
                         <h3 id="live-card-title">Game Core</h3>
-                        <p id="live-card-category">CATEGORY: ARCADE</p>
+                        <p id="live-card-category">CATEGORY: LOCAL</p>
                     </div>
-                </div>
-                <div class="meta-utilities-cluster">
-                    <div class="utility-action-node" id="like-btn" onclick="handleVote('like')">👍 <span id="val-likes-ticker">0</span></div>
-                    <div class="utility-action-node" id="dislike-btn" onclick="handleVote('dislike')">👎 <span id="val-dislikes-ticker">0</span></div>
-                    <div class="utility-action-node" onclick="bootFullscreenMode()" style="cursor: pointer; color: #ff4757;">Fullscreen ⛶</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 18 FULLY WORKING HARDCODED OPEN SOURCE GAME CARDS -->
+    <!-- 17 SAFELY SIZED INDEPENDENT SELECTION PORTALS -->
     <div class="compendium-dashboard-matrix" id="directory-cards-grid">
+        <div class="game-directory-card" onclick="deployApplication('./games/slope/index.html', 'Slope', '🔴')">
+            <div class="game-card-thumbnail-box">🔴</div><h3>Slope</h3><p>Local Package</p>
+        </div>
+        <div class="game-directory-card" onclick="deployApplication('./games/drive-mad/index.html', 'Drive Mad', '🏎️')">
+            <div class="game-card-thumbnail-box">🏎️</div><h3>Drive Mad</h3><p>Local Package</p>
+        </div>
+        <div class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
+            <div class="game-card-thumbnail-box">🏎️</div><h3>Polytrack</h3><p>Local Package</p>
+        </div>
 
-        <!-- SPORTS -->
+    <script>
+        function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
+            document.getElementById('runtime-canvas-injection-point').innerHTML = `<iframe id="live-frame-viewport" src="${sourceUrl}" allowfullscreen></iframe>`;
+            document.getElementById('live-card-title').innerText = titleName;
+            document.getElementById('live-card-emoji').innerText = thumbnailGlyph;
+            document.getElementById('runtime-metadata-drawer').style.display = 'flex';
+        }
+        function executeGlobalSearch() {
+            let activeQuery = document.getElementById('directory-search-input').value.toLowerCase();
+            let cards = document.getElementsByClassName('game-directory-card');
+            for (let i = 0; i < cards.length; i++) {
+                let checkTitleText = cards[i].getElementsByTagName('h3').innerText.toLowerCase();
+                if (checkTitleText.includes(activeQuery)) { cards[i].style.display = ""; } else { cards[i].style.display = "none"; }
+            }
+        }
+    </script>
+</body>
+</html>
