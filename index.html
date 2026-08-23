@@ -68,7 +68,7 @@ html<!DOCTYPE html>
         <div class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
             <div class="game-card-thumbnail-box">🏎️</div><h3>Polytrack</h3><p>Local Package</p>
         </div>
-
+    </div>
     <script>
         function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
             document.getElementById('runtime-canvas-injection-point').innerHTML = `<iframe id="live-frame-viewport" src="${sourceUrl}" allowfullscreen></iframe>`;
