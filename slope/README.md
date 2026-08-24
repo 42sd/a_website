@@ -1,4 +1,2 @@
-# Slope Game
-https://PlaySlope.pages.dev
-
-
+# slope
+A clone of the original slope game by Y8
