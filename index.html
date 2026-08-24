@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A game website</title>
     <style>
-        body { background-color: #0f1115; color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+        body { background-image: url('background.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
+ color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
         header { background-color: #161920; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232733; position: sticky; top: 0; z-index: 100; }
         .header-left { display: flex; align-items: center; gap: 35px; }
         .site-logo-brand { font-size: 20px; font-weight: 800; color: #ffffff; text-transform: capitalize; cursor: pointer; }
@@ -36,9 +37,9 @@
         </div>
         <div class="search-engine-box">
             <span class="search-svg-icon">🔍</span>
-            <input type="text" class="search-field-input" id="directory-search-input" placeholder="Search for games..." onkeyup="executeGlobalSearch()">
+            <input type="text" class="search-field-input" id="directory-search-input" placeholder="Search for
+    </header> games..." onkeyup="executeGlobalSearch()">
         </div>
-    </header>
 
     <div class="stage-viewport-area">
         <div class="viewport-wrapper">
@@ -59,19 +60,17 @@
 
     <!-- 17 SAFELY SIZED INDEPENDENT SELECTION PORTALS -->
     <div class="compendium-dashboard-matrix" id="directory-cards-grid">
-        <div class="game-directory-card" onclick="deployApplication('./slope/index.html', 'Slope', '🔴')">
+        <div class="game-directory-card" onclick="deployApplication('./games/slope/index.html', 'Slope', '🔴')">
             <div class="game-card-thumbnail-box">🔴</div><h3>Slope</h3><p>Local Package</p>
         </div>
-        <div class="game-directory-card" onclick="deployApplication('./drive-mad/index.html', 'Drive Mad', '🏎️')">
+        <div class="game-directory-card" onclick="deployApplication('./games/drive-mad/index.html', 'Drive Mad', '🏎️')">
             <div class="game-card-thumbnail-box">🏎️</div><h3>Drive Mad</h3><p>Local Package</p>
         </div>
-        <div class="game-directory-card" onclick="deployApplication('./polytrack/index.html', 'Polytrack', '🏎️')">
+        <div class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
             <div class="game-card-thumbnail-box">🏎️</div><h3>Polytrack</h3><p>Local Package</p>
-        </div>  
-        <div class="game-directory-card" onclick="deployApplication('./level-devil/index.html', 'Level Devil', '😈')">
-            <div class="game-card-thumbnail-box">😈</div><h3>Level Devil</h3><p>Local Package</p>
         </div>
     </div>
+
     <script>
         function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
             document.getElementById('runtime-canvas-injection-point').innerHTML = `<iframe id="live-frame-viewport" src="${sourceUrl}" allowfullscreen></iframe>`;
