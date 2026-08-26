@@ -1,96 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A game website</title>
-    <style>
-        body { background-image: url('background.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
-        color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
-        header { background-color: #161920; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232733; position: sticky; top: 0; z-index: 100; }
-        .header-left { display: flex; align-items: center; gap: 35px; }
-        .site-logo-brand { font-size: 20px; font-weight: 800; color: #ffffff; text-transform: capitalize; cursor: pointer; }
-        .search-engine-box { position: relative; display: flex; align-items: center; }
-        .search-field-input { background-color: #0f1115; border: 1px solid #232733; border-radius: 8px; padding: 9px 16px 9px 40px; color: #ffffff; font-size: 13px; width: 240px; font-weight: 600; outline: none; }
-        .search-svg-icon { position: absolute; left: 14px; color: #4b5263; font-size: 13px; pointer-events: none; }
-        .stage-viewport-area { max-width: 1060px; margin: 20px auto 30px auto; padding: 0 20px; }
-        .viewport-wrapper { background-color: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0px 20px 45px rgba(0,0,0,0.6); border: 1px solid #161920; }
-        #live-frame-viewport { width: 100%; height: 580px; background-color: #000000; border: none; display: block; }
-        .idle-splash-screen { color: #4b5263; height: 580px; display: flex; justify-content: center; align-items: center; font-size: 16px; background: #060709; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .viewport-meta-drawer { background-color: #060709; border-top: 1px solid #161920; padding: 16px 24px; display: none; justify-content: space-between; align-items: center; }
-        .meta-identity-block { display: flex; align-items: center; gap: 15px; }
-        .meta-avatar-badge { font-size: 26px; width: 46px; height: 46px; background-color: #161920; border: 1px solid #232733; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
-        .meta-title-text h3 { margin: 0; color: #ffffff; font-size: 16px; font-weight: 700; }
-        .meta-title-text p { margin: 4px 0 0 0; color: #4b5263; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .compendium-dashboard-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; max-width: 1200px; margin: 40px auto 60px auto; padding: 0 20px; }
-        .game-directory-card { background-color: #161920; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s, background-color 0.2s; border: 1px solid #232733; text-align: left; padding-bottom: 14px; }
-        .game-directory-card:hover { transform: translateY(-4px); background-color: #1c2029; border-color: #2d3345; }
-        .game-card-thumbnail-box { width: 100%; height: 125px; background: linear-gradient(135deg, #1c2029 0%, #0f1115 100%); display: flex; justify-content: center; align-items: center; font-size: 40px; border-bottom: 1px solid #232733; }
-        .game-directory-card h3 { margin: 12px 16px 4px 16px; font-size: 14px; color: #ffffff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-directory-card p { margin: 0 16px; font-size: 11px; color: #4b5263; text-transform: uppercase; font-weight: 700; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="A small arcade hub to load local HTML game packages" />
+  <title>GameHub</title>
+
+  <style>
+    :root{
+      --bg:#0b0d10;
+      --panel:#161920;
+      --panel-contrast:#232733;
+      --muted:#4b5263;
+      --accent:#1c2029;
+      --text:#ffffff;
+      --radius:10px;
+      --max-width:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: linear-gradient(180deg,#05060a 0%, #081018 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 20px;
+      background:rgba(22,25,32,0.9);
+      border-bottom:1px solid var(--panel-contrast);
+      backdrop-filter: blur(6px);
+    }
+
+    .header-left{display:flex;align-items:center;gap:18px}
+    .site-logo-brand{
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .search-engine-box{position:relative;display:flex;align-items:center}
+    .search-svg-icon{position:absolute;left:12px;color:var(--muted);pointer-events:none;font-size:14px}
+    .search-field-input{
+      padding:10px 14px 10px 38px;
+      background:#0f1115;
+      border:1px solid var(--panel-contrast);
+      color:var(--text);
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+      width:260px;
+      outline:none;
+    }
+    .search-field-input:focus{box-shadow:0 0 0 3px rgba(100,120,255,0.06);}
+
+    main{max-width:var(--max-width);margin:20px auto;padding:0 16px}
+
+    .viewport-wrapper{
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 20px 45px rgba(0,0,0,0.6);
+      border:1px solid var(--panel);
+    }
+    #runtime-canvas-injection-point{
+      width:100%;
+      min-height:320px;
+      background:#060709;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    iframe.game-viewport{
+      width:100%;
+      height:580px;
+      border:0;
+      display:block;
+      background:#000;
+    }
+
+    .idle-splash-screen{
+      color:var(--muted);
+      padding:36px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      text-align:center;
+    }
+
+    .viewport-meta-drawer{
+      background:#060709;
+      border-top:1px solid var(--panel);
+      padding:14px 18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .meta-left{display:flex;gap:12px;align-items:center}
+    .meta-avatar-badge{
+      font-size:26px;
+      width:46px;height:46px;
+      background:var(--panel);
+      border:1px solid var(--panel-contrast);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .meta-text-block h3{margin:0;font-size:16px}
+    .meta-text-block p{margin:4px 0 0;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}
+
+    .compendium-dashboard-matrix{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+      gap:18px;
+      margin:28px auto 60px;
+    }
+
+    .game-directory-card{
+      appearance:none;
+      background:var(--panel);
+      color:var(--text);
+      border-radius:var(--radius);
+      padding:0;
+      text-align:left;
+      overflow:hidden;
+      cursor:pointer;
+      border:1px solid var(--panel-contrast);
+      transition:transform .16s ease,background .12s;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      min-height:150px;
+    }
+    .game-directory-card:focus{outline:3px solid rgba(100,120,255,0.08)}
+    .game-directory-card:hover{transform:translateY(-4px);background:var(--accent);border-color:#2d3345}
+
+    .game-card-thumbnail-box{
+      height:120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:44px;
+      background:linear-gradient(135deg,#1c2029 0%,#0f1115 100%);
+    }
+    .game-directory-card-content{padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:6px}
+    .game-directory-card h3{margin:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+    .game-directory-card p{margin:0;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}
+
+    @media (max-width:680px){
+      .search-field-input{width:160px}
+      iframe.game-viewport{height:420px}
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <div class="site-logo-brand" onclick="window.location.reload()">🍕 A game website</div>
-        </div>
-        <div class="search-engine-box">
-            <span class="search-svg-icon">🔍</span>
-            <input type="text" class="search-field-input" id="directory-search-input" placeholder="Search for
-    </header> games..." onkeyup="executeGlobalSearch()">
-        </div>
-
-    <div class="stage-viewport-area">
-        <div class="viewport-wrapper">
-            <div id="runtime-canvas-injection-point">
-                <div class="idle-splash-screen">Select an arcade game package below...</div>
-            </div>
-            <div class="viewport-meta-drawer" id="runtime-metadata-drawer">
-                
-                    <div class="meta-avatar-badge" id="live-card-emoji">🎮</div>
-                    <div class="meta-text-block">
-                        <h3 id="live-card-title">Game Core</h3>
-                        <p id="live-card-category">CATEGORY: LOCAL</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header>
+    <div class="header-left">
+      <div class="site-logo-brand" id="brand" role="button" tabindex="0" title="Reload game list">🍕 A game website</div>
     </div>
 
-    <!-- 17 SAFELY SIZED INDEPENDENT SELECTION PORTALS -->
-    <div class="compendium-dashboard-matrix" id="directory-cards-grid">
-        <button class="game-directory-card" onclick="deployApplication('./games/slope/index.html', 'Slope', '🔴')">
-            <div class="game-card-thumbnail-box">🔴</div><h3>Slope</h3><p>Local Package</p>
-        </div>
-        <button class="game-directory-card" onclick="deployApplication('./games/drive-mad/index.html', 'Drive Mad', '🏎️')">
-            <div class="game-card-thumbnail-box">🏎️</div><h3>Drive Mad</h3><p>Local Package</p>
-        </div>
-        <button class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
-            <div class="game-card-thumbnail-box">🏎️</div><h3>Polytrack</h3><p>Local Package</p>
-        </div>
+    <div class="search-engine-box" role="search" aria-label="Search games">
+      <span class="search-svg-icon" aria-hidden="true">🔍</span>
+      <input id="directory-search-input" class="search-field-input" type="search" placeholder="Search games (title or category)" aria-label="Search games" />
     </div>
+  </header>
 
-    <script>
-         function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
-            const iframe = document.createElement('iframe');
-            iframe.id = 'live-frame-viewport';
-            iframe.src = sourceUrl;
-            iframe.allowFullscreen = true;
-            document.getElementById('runtime-canvas-injection-point').innerHTML = '';
-            document.getElementById('runtime-canvas-injection-point').appendChild(iframe);
-            document.getElementById('live-card-title').innerText = titleName;
-            document.getElementById('live-card-emoji').innerText = thumbnailGlyph;
-            document.getElementById('runtime-metadata-drawer').style.display = 'flex';
+  <main>
+    <section class="stage-viewport-area">
+      <div class="viewport-wrapper" aria-live="polite">
+        <div id="runtime-canvas-injection-point">
+          <div class="idle-splash-screen">Select an arcade game package below…</div>
+        </div>
+
+        <div class="viewport-meta-drawer" id="runtime-metadata-drawer" aria-hidden="true" hidden>
+          <div class="meta-left">
+            <div class="meta-avatar-badge" id="live-card-emoji" aria-hidden="true">🎮</div>
+            <div class="meta-text-block">
+              <h3 id="live-card-title">Game Core</h3>
+              <p id="live-card-category">CATEGORY: LOCAL</p>
+            </div>
+          </div>
+          <div class="meta-actions">
+            <button id="close-runtime" title="Close game" aria-label="Close game">Close</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="compendium-dashboard-matrix" id="directory-cards-grid" aria-live="polite">
+        <!-- Cards use data attributes and are wired up by JS -->
+        <button class="game-directory-card" data-src="./games/slope/index.html" data-title="Slope" data-category="Local Package" data-glyph="🔴" aria-label="Launch Slope">
+          <div class="game-card-thumbnail-box" aria-hidden="true">🔴</div>
+          <div class="game-directory-card-content">
+            <h3>Slope</h3>
+            <p>Local Package</p>
+          </div>
+        </button>
+
+        <button class="game-directory-card" data-src="./games/drive-mad/index.html" data-title="Drive Mad" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Drive Mad">
+          <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
+          <div class="game-directory-card-content">
+            <h3>Drive Mad</h3>
+            <p>Local Package</p>
+          </div>
+        </button>
+
+        <button class="game-directory-card" data-src="./games/polytrack/index.html" data-title="Polytrack" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Polytrack">
+          <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
+          <div class="game-directory-card-content">
+            <h3>Polytrack</h3>
+            <p>Local Package</p>
+          </div>
+        </button>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Behavior separated from markup
+    (function(){
+      const grid = document.getElementById('directory-cards-grid');
+      const searchInput = document.getElementById('directory-search-input');
+      const injectionPoint = document.getElementById('runtime-canvas-injection-point');
+      const metaDrawer = document.getElementById('runtime-metadata-drawer');
+      const liveTitle = document.getElementById('live-card-title');
+      const liveEmoji = document.getElementById('live-card-emoji');
+      const closeBtn = document.getElementById('close-runtime');
+
+      // Debounce helper
+      function debounce(fn, wait){
+        let t;
+        return function(...args){
+          clearTimeout(t);
+          t = setTimeout(()=>fn.apply(this,args), wait);
+        };
+      }
+
+      // Deploy sandboxed iframe
+      function deployApplication(sourceUrl, titleName, thumbnailGlyph){
+        // create sandboxed iframe for safety
+        const iframe = document.createElement('iframe');
+        iframe.className = 'game-viewport';
+        iframe.title = 'Game: ' + titleName;
+        iframe.src = sourceUrl;
+        iframe.loading = 'lazy';
+        // sandbox: keep scripts but isolate origin where possible; tune for your needs
+        iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+        // allow fullscreen/autoplay if games require it
+        iframe.allow = 'fullscreen; autoplay';
+        // inject
+        injectionPoint.innerHTML = '';
+        injectionPoint.appendChild(iframe);
+
+        // update metadata
+        liveTitle.textContent = titleName;
+        liveEmoji.textContent = thumbnailGlyph || '🎮';
+        metaDrawer.hidden = false;
+        metaDrawer.setAttribute('aria-hidden','false');
+
+        // remember last played
+        try { localStorage.setItem('gamehub.last', JSON.stringify({src:sourceUrl, title:titleName, glyph:thumbnailGlyph})); } catch(e){/* ignore */}
+      }
+
+      // Close / unload current game
+      function closeRuntime(){
+        injectionPoint.innerHTML = '<div class="idle-splash-screen">Select an arcade game package below…</div>';
+        metaDrawer.hidden = true;
+        metaDrawer.setAttribute('aria-hidden','true');
+        liveTitle.textContent = 'Game Core';
+        liveEmoji.textContent = '🎮';
+        try { localStorage.removeItem('gamehub.last'); } catch(e){}
+      }
+
+      // Wire up grid buttons (click & keyboard)
+      grid.querySelectorAll('.game-directory-card').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const src = btn.getAttribute('data-src');
+          const title = btn.getAttribute('data-title') || btn.querySelector('h3')?.innerText || 'Game';
+          const glyph = btn.getAttribute('data-glyph') || '🎮';
+          deployApplication(src, title, glyph);
+        });
+        // space/enter already activate <button>, so additional keyboard handler not required
+      });
+
+      // Search/filter (title and category)
+      function doFilter(){
+        const q = (searchInput.value || '').trim().toLowerCase();
+        grid.querySelectorAll('.game-directory-card').forEach(btn=>{
+          const title = (btn.getAttribute('data-title') || '').toLowerCase();
+          const category = (btn.getAttribute('data-category') || '').toLowerCase();
+          const matches = !q || title.includes(q) || category.includes(q);
+          btn.style.display = matches ? '' : 'none';
+        });
+      }
+      const debouncedFilter = debounce(doFilter, 180);
+      searchInput.addEventListener('input', debouncedFilter);
+
+      // Close button
+      closeBtn.addEventListener('click', closeRuntime);
+
+      // brand click reloads the page list (simple reload)
+      document.getElementById('brand').addEventListener('click', ()=>location.reload());
+
+      // Restore last played if present
+      try {
+        const last = JSON.parse(localStorage.getItem('gamehub.last') || 'null');
+        if (last && last.src) {
+          // Optionally auto-load last played — comment out if undesired
+          // deployApplication(last.src, last.title, last.glyph);
         }
-        function executeGlobalSearch() {
-            let activeQuery = document.getElementById('directory-search-input').value.toLowerCase();
-            let cards = document.getElementsByClassName('game-directory-card');
-            for (let i = 0; i < cards.length; i++) {
-                let checkTitleText = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                if (checkTitleText.includes(activeQuery)) { cards[i].style.display = ""; } else { cards[i].style.display = "none"; }
-            }
-        }
-    </script>
+      } catch(e){ /* ignore */ }
+
+      // Accessibility: allow press Enter on brand (role=button)
+      document.getElementById('brand').addEventListener('keydown', (ev)=>{
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); location.reload(); }
+      });
+    })();
+  </script>
 </body>
 </html>
