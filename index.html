@@ -6,7 +6,7 @@
     <title>A game website</title>
     <style>
         body { background-image: url('background.png'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
- color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+        color: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
         header { background-color: #161920; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232733; position: sticky; top: 0; z-index: 100; }
         .header-left { display: flex; align-items: center; gap: 35px; }
         .site-logo-brand { font-size: 20px; font-weight: 800; color: #ffffff; text-transform: capitalize; cursor: pointer; }
@@ -60,20 +60,25 @@
 
     <!-- 17 SAFELY SIZED INDEPENDENT SELECTION PORTALS -->
     <div class="compendium-dashboard-matrix" id="directory-cards-grid">
-        <div class="game-directory-card" onclick="deployApplication('./games/slope/index.html', 'Slope', '🔴')">
+        <button class="game-directory-card" onclick="deployApplication('./games/slope/index.html', 'Slope', '🔴')">
             <div class="game-card-thumbnail-box">🔴</div><h3>Slope</h3><p>Local Package</p>
         </div>
-        <div class="game-directory-card" onclick="deployApplication('./games/drive-mad/index.html', 'Drive Mad', '🏎️')">
+        <button class="game-directory-card" onclick="deployApplication('./games/drive-mad/index.html', 'Drive Mad', '🏎️')">
             <div class="game-card-thumbnail-box">🏎️</div><h3>Drive Mad</h3><p>Local Package</p>
         </div>
-        <div class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
+        <button class="game-directory-card" onclick="deployApplication('./games/polytrack/index.html', 'Polytrack', '🏎️')">
             <div class="game-card-thumbnail-box">🏎️</div><h3>Polytrack</h3><p>Local Package</p>
         </div>
     </div>
 
     <script>
-        function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
-            document.getElementById('runtime-canvas-injection-point').innerHTML = `<iframe id="live-frame-viewport" src="${sourceUrl}" allowfullscreen></iframe>`;
+         function deployApplication(sourceUrl, titleName, thumbnailGlyph) {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'live-frame-viewport';
+            iframe.src = sourceUrl;
+            iframe.allowFullscreen = true;
+            document.getElementById('runtime-canvas-injection-point').innerHTML = '';
+            document.getElementById('runtime-canvas-injection-point').appendChild(iframe);
             document.getElementById('live-card-title').innerText = titleName;
             document.getElementById('live-card-emoji').innerText = thumbnailGlyph;
             document.getElementById('runtime-metadata-drawer').style.display = 'flex';
@@ -82,7 +87,7 @@
             let activeQuery = document.getElementById('directory-search-input').value.toLowerCase();
             let cards = document.getElementsByClassName('game-directory-card');
             for (let i = 0; i < cards.length; i++) {
-                let checkTitleText = cards[i].getElementsByTagName('h3').innerText.toLowerCase();
+                let checkTitleText = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
                 if (checkTitleText.includes(activeQuery)) { cards[i].style.display = ""; } else { cards[i].style.display = "none"; }
             }
         }
