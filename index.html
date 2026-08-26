@@ -197,7 +197,7 @@
             </div>
           </div>
           <div class="meta-actions">
-            <button id="close-runtime" title="Close game" aria-label="Close game">Close</button>
+            <button id="fullscreen-runtime" title="Enter fullscreen" aria-label="Enter fullscreen">⛶ Fullscreen</button>
           </div>
         </div>
       </div>
@@ -251,7 +251,7 @@
       const metaDrawer = document.getElementById('runtime-metadata-drawer');
       const liveTitle = document.getElementById('live-card-title');
       const liveEmoji = document.getElementById('live-card-emoji');
-      const closeBtn = document.getElementById('close-runtime');
+      const fullscreenBtn = document.getElementById('fullscreen-runtime');
 
       // Debounce helper
       function debounce(fn, wait){
@@ -271,7 +271,7 @@
         iframe.src = sourceUrl;
         iframe.loading = 'lazy';
         // sandbox: keep scripts but isolate origin where possible; tune for your needs
-        iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+        iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups allow-presentation';
         // allow fullscreen/autoplay if games require it
         iframe.allow = 'fullscreen; autoplay';
         // inject
@@ -298,6 +298,22 @@
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
       }
 
+      // Fullscreen handler
+      function toggleFullscreen(){
+        const viewportWrapper = document.querySelector('.viewport-wrapper');
+        if (!document.fullscreenElement) {
+          if (viewportWrapper.requestFullscreen) {
+            viewportWrapper.requestFullscreen();
+          } else if (viewportWrapper.webkitRequestFullscreen) {
+            viewportWrapper.webkitRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      }
+
       // Wire up grid buttons (click & keyboard)
       grid.querySelectorAll('.game-directory-card').forEach(btn=>{
         btn.addEventListener('click', ()=>{
@@ -322,8 +338,8 @@
       const debouncedFilter = debounce(doFilter, 180);
       searchInput.addEventListener('input', debouncedFilter);
 
-      // Close button
-      closeBtn.addEventListener('click', closeRuntime);
+      // Fullscreen button
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
 
       // brand click reloads the page list (simple reload)
       document.getElementById('brand').addEventListener('click', ()=>location.reload());
