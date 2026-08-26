@@ -78,6 +78,18 @@
       box-shadow:0 20px 45px rgba(0,0,0,0.6);
       border:1px solid var(--panel);
     }
+    .viewport-wrapper.fullscreen-active{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100vw;
+      height:100vh;
+      border-radius:0;
+      margin:0;
+      box-shadow:none;
+      border:none;
+      z-index:9999;
+    }
     .viewport-wrapper:-webkit-full-screen{
       width:100vw;
       height:100vh;
@@ -111,6 +123,7 @@
       align-items:center;
       justify-content:center;
     }
+    .viewport-wrapper.fullscreen-active #runtime-canvas-injection-point,
     .viewport-wrapper:fullscreen #runtime-canvas-injection-point{
       min-height:100vh;
     }
@@ -122,6 +135,7 @@
       display:block;
       background:#000;
     }
+    .viewport-wrapper.fullscreen-active iframe.game-viewport,
     .viewport-wrapper:fullscreen iframe.game-viewport,
     .viewport-wrapper:-webkit-full-screen iframe.game-viewport,
     .viewport-wrapper:-moz-full-screen iframe.game-viewport{
@@ -145,6 +159,9 @@
       gap:12px;
       align-items:center;
       justify-content:space-between;
+    }
+    .viewport-wrapper.fullscreen-active .viewport-meta-drawer{
+      display:none;
     }
     .meta-left{display:flex;gap:12px;align-items:center}
     .meta-avatar-badge{
@@ -285,6 +302,7 @@
       const liveTitle = document.getElementById('live-card-title');
       const liveEmoji = document.getElementById('live-card-emoji');
       const fullscreenBtn = document.getElementById('fullscreen-runtime');
+      const viewportWrapper = document.querySelector('.viewport-wrapper');
 
       // Debounce helper
       function debounce(fn, wait){
@@ -333,19 +351,42 @@
 
       // Fullscreen handler
       function toggleFullscreen(){
-        const viewportWrapper = document.querySelector('.viewport-wrapper');
-        if (!document.fullscreenElement) {
+        if (!viewportWrapper.classList.contains('fullscreen-active')) {
+          viewportWrapper.classList.add('fullscreen-active');
+          fullscreenBtn.setAttribute('title', 'Exit fullscreen');
+          fullscreenBtn.setAttribute('aria-label', 'Exit fullscreen');
+          fullscreenBtn.textContent = '⊡ Exit Fullscreen';
+          // Also attempt native fullscreen API if available
           if (viewportWrapper.requestFullscreen) {
-            viewportWrapper.requestFullscreen();
+            viewportWrapper.requestFullscreen().catch(err => console.log('Fullscreen request failed:', err));
           } else if (viewportWrapper.webkitRequestFullscreen) {
             viewportWrapper.webkitRequestFullscreen();
           }
         } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
+          viewportWrapper.classList.remove('fullscreen-active');
+          fullscreenBtn.setAttribute('title', 'Enter fullscreen');
+          fullscreenBtn.setAttribute('aria-label', 'Enter fullscreen');
+          fullscreenBtn.textContent = '⛶ Fullscreen';
+          // Exit native fullscreen if active
+          if (document.fullscreenElement) {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            }
           }
         }
       }
+
+      // Listen for native fullscreen exit
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement && viewportWrapper.classList.contains('fullscreen-active')) {
+          viewportWrapper.classList.remove('fullscreen-active');
+          fullscreenBtn.setAttribute('title', 'Enter fullscreen');
+          fullscreenBtn.setAttribute('aria-label', 'Enter fullscreen');
+          fullscreenBtn.textContent = '⛶ Fullscreen';
+        }
+      });
 
       // Wire up grid buttons (click & keyboard)
       grid.querySelectorAll('.game-directory-card').forEach(btn=>{
