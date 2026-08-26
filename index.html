@@ -107,6 +107,8 @@
       border:1px solid var(--panel);
       margin:20px auto;
       max-width:90%;
+      display:flex;
+      flex-direction:column;
     }
     .stage-viewport-area.active .viewport-wrapper{
       border-radius:0;
@@ -133,14 +135,11 @@
     
     #runtime-canvas-injection-point{
       width:100%;
-      height:100%;
+      flex:1;
       background:#060709;
       display:flex;
       align-items:center;
       justify-content:center;
-    }
-    .stage-viewport-area.active #runtime-canvas-injection-point{
-      min-height:100vh;
     }
 
     iframe.game-viewport{
@@ -167,13 +166,7 @@
       display:flex;
       gap:12px;
       align-items:center;
-      justify-content:center;
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      z-index:9999;
-      width:100%;
+      justify-content:space-between;
     }
     .stage-viewport-area.active .viewport-meta-drawer{
       display:flex;
@@ -181,6 +174,19 @@
     .viewport-meta-drawer[hidden]{
       display:none;
     }
+    .meta-left{display:flex;gap:12px;align-items:center}
+    .meta-avatar-badge{
+      font-size:26px;
+      width:46px;height:46px;
+      background:var(--panel);
+      border:1px solid var(--panel-contrast);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .meta-text-block h3{margin:0;font-size:16px}
+    .meta-text-block p{margin:4px 0 0;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}
+    
     .back-button{
       appearance:none;
       background:none;
@@ -194,6 +200,7 @@
       justify-content:center;
       transition:transform 0.2s ease;
       user-select:none;
+      flex-shrink:0;
     }
     .back-button:hover{
       transform:scale(1.1);
@@ -266,6 +273,13 @@
         </div>
 
         <div class="viewport-meta-drawer" id="runtime-metadata-drawer" aria-hidden="true" hidden>
+          <div class="meta-left">
+            <div class="meta-avatar-badge" id="live-card-emoji" aria-hidden="true">🎮</div>
+            <div class="meta-text-block">
+              <h3 id="live-card-title">Game Core</h3>
+              <p id="live-card-category">CATEGORY: LOCAL</p>
+            </div>
+          </div>
           <button class="back-button" id="back-button" title="Back to game list" aria-label="Back to game list">➜</button>
         </div>
       </div>
@@ -317,6 +331,8 @@
       const searchInput = document.getElementById('directory-search-input');
       const injectionPoint = document.getElementById('runtime-canvas-injection-point');
       const metaDrawer = document.getElementById('runtime-metadata-drawer');
+      const liveTitle = document.getElementById('live-card-title');
+      const liveEmoji = document.getElementById('live-card-emoji');
       const backButton = document.getElementById('back-button');
       const viewportWrapper = document.querySelector('.viewport-wrapper');
       const viewportStage = document.getElementById('viewport-stage');
@@ -347,7 +363,11 @@
         injectionPoint.innerHTML = '';
         injectionPoint.appendChild(iframe);
 
-        // Show back button
+        // update metadata
+        liveTitle.textContent = titleName;
+        liveEmoji.textContent = thumbnailGlyph || '🎮';
+
+        // Show metadata drawer with back button
         metaDrawer.hidden = false;
         metaDrawer.setAttribute('aria-hidden','false');
 
@@ -364,6 +384,8 @@
         injectionPoint.innerHTML = '<div class="idle-splash-screen">Select an arcade game package below…</div>';
         metaDrawer.hidden = true;
         metaDrawer.setAttribute('aria-hidden','true');
+        liveTitle.textContent = 'Game Core';
+        liveEmoji.textContent = '🎮';
         viewportStage.classList.remove('active');
         gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
