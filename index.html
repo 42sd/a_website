@@ -19,14 +19,15 @@
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%;margin:0}
     body{
-      margin:0;
       font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
       color:var(--text);
       background: linear-gradient(180deg,#05060a 0%, #081018 100%);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      flex-direction:column;
     }
 
     header{
@@ -41,6 +42,7 @@
       background:rgba(22,25,32,0.9);
       border-bottom:1px solid var(--panel-contrast);
       backdrop-filter: blur(6px);
+      flex-shrink:0;
     }
 
     .header-left{display:flex;align-items:center;gap:18px}
@@ -69,7 +71,33 @@
     }
     .search-field-input:focus{box-shadow:0 0 0 3px rgba(100,120,255,0.06);}
 
-    main{max-width:var(--max-width);margin:20px auto;padding:0 16px}
+    main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 16px;
+      width:100%;
+      overflow-y:auto;
+    }
+
+    .stage-viewport-area{
+      display:none;
+      width:100%;
+      height:100%;
+    }
+    .stage-viewport-area.active{
+      display:flex;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      z-index:9998;
+      margin:0;
+      padding:0;
+    }
 
     .viewport-wrapper{
       background:#000;
@@ -77,6 +105,18 @@
       overflow:hidden;
       box-shadow:0 20px 45px rgba(0,0,0,0.6);
       border:1px solid var(--panel);
+      margin:20px auto;
+      max-width:90%;
+    }
+    .stage-viewport-area.active .viewport-wrapper{
+      border-radius:0;
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100%;
+      max-width:100%;
+      box-shadow:none;
+      border:none;
     }
     .viewport-wrapper.fullscreen-active{
       position:fixed;
@@ -90,56 +130,25 @@
       border:none;
       z-index:9999;
     }
-    .viewport-wrapper:-webkit-full-screen{
-      width:100vw;
-      height:100vh;
-      border-radius:0;
-      margin:0;
-      box-shadow:none;
-      border:none;
-    }
-    .viewport-wrapper:-moz-full-screen{
-      width:100vw;
-      height:100vh;
-      border-radius:0;
-      margin:0;
-      box-shadow:none;
-      border:none;
-    }
-    .viewport-wrapper:fullscreen{
-      width:100vw;
-      height:100vh;
-      border-radius:0;
-      margin:0;
-      box-shadow:none;
-      border:none;
-    }
     
     #runtime-canvas-injection-point{
       width:100%;
-      min-height:320px;
+      height:100%;
       background:#060709;
       display:flex;
       align-items:center;
       justify-content:center;
     }
-    .viewport-wrapper.fullscreen-active #runtime-canvas-injection-point,
-    .viewport-wrapper:fullscreen #runtime-canvas-injection-point{
+    .stage-viewport-area.active #runtime-canvas-injection-point{
       min-height:100vh;
     }
 
     iframe.game-viewport{
       width:100%;
-      height:580px;
+      height:100%;
       border:0;
       display:block;
       background:#000;
-    }
-    .viewport-wrapper.fullscreen-active iframe.game-viewport,
-    .viewport-wrapper:fullscreen iframe.game-viewport,
-    .viewport-wrapper:-webkit-full-screen iframe.game-viewport,
-    .viewport-wrapper:-moz-full-screen iframe.game-viewport{
-      height:100vh;
     }
 
     .idle-splash-screen{
@@ -159,8 +168,17 @@
       gap:12px;
       align-items:center;
       justify-content:space-between;
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:9999;
+      width:100%;
     }
-    .viewport-wrapper.fullscreen-active .viewport-meta-drawer{
+    .stage-viewport-area.active .viewport-meta-drawer{
+      display:flex;
+    }
+    .viewport-meta-drawer[hidden]{
       display:none;
     }
     .meta-left{display:flex;gap:12px;align-items:center}
@@ -232,7 +250,7 @@
   </header>
 
   <main>
-    <section class="stage-viewport-area">
+    <section class="stage-viewport-area" id="viewport-stage">
       <div class="viewport-wrapper" aria-live="polite">
         <div id="runtime-canvas-injection-point">
           <div class="idle-splash-screen">Idk what to put here</div>
@@ -253,7 +271,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="game-list-section">
       <div class="compendium-dashboard-matrix" id="directory-cards-grid" aria-live="polite">
         <!-- Cards use data attributes and are wired up by JS -->
         <button class="game-directory-card" data-src="./slope/index.html" data-title="Slope" data-category="Local Package" data-glyph="🔴" aria-label="Launch Slope">
@@ -303,6 +321,8 @@
       const liveEmoji = document.getElementById('live-card-emoji');
       const fullscreenBtn = document.getElementById('fullscreen-runtime');
       const viewportWrapper = document.querySelector('.viewport-wrapper');
+      const viewportStage = document.getElementById('viewport-stage');
+      const gameListSection = document.getElementById('game-list-section');
 
       // Debounce helper
       function debounce(fn, wait){
@@ -335,6 +355,10 @@
         metaDrawer.hidden = false;
         metaDrawer.setAttribute('aria-hidden','false');
 
+        // Show viewport stage
+        viewportStage.classList.add('active');
+        gameListSection.style.display = 'none';
+
         // remember last played
         try { localStorage.setItem('gamehub.last', JSON.stringify({src:sourceUrl, title:titleName, glyph:thumbnailGlyph})); } catch(e){/* ignore */}
       }
@@ -346,6 +370,8 @@
         metaDrawer.setAttribute('aria-hidden','true');
         liveTitle.textContent = 'Game Core';
         liveEmoji.textContent = '🎮';
+        viewportStage.classList.remove('active');
+        gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
       }
 
