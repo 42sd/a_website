@@ -167,7 +167,7 @@
       display:flex;
       gap:12px;
       align-items:center;
-      justify-content:space-between;
+      justify-content:center;
       position:fixed;
       bottom:0;
       left:0;
@@ -181,17 +181,26 @@
     .viewport-meta-drawer[hidden]{
       display:none;
     }
-    .meta-left{display:flex;gap:12px;align-items:center}
-    .meta-avatar-badge{
-      font-size:26px;
-      width:46px;height:46px;
-      background:var(--panel);
-      border:1px solid var(--panel-contrast);
-      border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
+    .back-button{
+      appearance:none;
+      background:none;
+      border:none;
+      color:var(--text);
+      font-size:48px;
+      cursor:pointer;
+      padding:8px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform 0.2s ease;
+      user-select:none;
     }
-    .meta-text-block h3{margin:0;font-size:16px}
-    .meta-text-block p{margin:4px 0 0;font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}
+    .back-button:hover{
+      transform:scale(1.1);
+    }
+    .back-button:active{
+      transform:scale(0.95);
+    }
 
     .compendium-dashboard-matrix{
       display:grid;
@@ -257,16 +266,7 @@
         </div>
 
         <div class="viewport-meta-drawer" id="runtime-metadata-drawer" aria-hidden="true" hidden>
-          <div class="meta-left">
-            <div class="meta-avatar-badge" id="live-card-emoji" aria-hidden="true">🎮</div>
-            <div class="meta-text-block">
-              <h3 id="live-card-title">Game Core</h3>
-              <p id="live-card-category">CATEGORY: LOCAL</p>
-            </div>
-          </div>
-          <div class="meta-actions">
-            <button id="fullscreen-runtime" title="Enter fullscreen" aria-label="Enter fullscreen">⛶ Fullscreen</button>
-          </div>
+          <button class="back-button" id="back-button" title="Back to game list" aria-label="Back to game list">➜</button>
         </div>
       </div>
     </section>
@@ -317,9 +317,7 @@
       const searchInput = document.getElementById('directory-search-input');
       const injectionPoint = document.getElementById('runtime-canvas-injection-point');
       const metaDrawer = document.getElementById('runtime-metadata-drawer');
-      const liveTitle = document.getElementById('live-card-title');
-      const liveEmoji = document.getElementById('live-card-emoji');
-      const fullscreenBtn = document.getElementById('fullscreen-runtime');
+      const backButton = document.getElementById('back-button');
       const viewportWrapper = document.querySelector('.viewport-wrapper');
       const viewportStage = document.getElementById('viewport-stage');
       const gameListSection = document.getElementById('game-list-section');
@@ -349,9 +347,7 @@
         injectionPoint.innerHTML = '';
         injectionPoint.appendChild(iframe);
 
-        // update metadata
-        liveTitle.textContent = titleName;
-        liveEmoji.textContent = thumbnailGlyph || '🎮';
+        // Show back button
         metaDrawer.hidden = false;
         metaDrawer.setAttribute('aria-hidden','false');
 
@@ -368,51 +364,10 @@
         injectionPoint.innerHTML = '<div class="idle-splash-screen">Select an arcade game package below…</div>';
         metaDrawer.hidden = true;
         metaDrawer.setAttribute('aria-hidden','true');
-        liveTitle.textContent = 'Game Core';
-        liveEmoji.textContent = '🎮';
         viewportStage.classList.remove('active');
         gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
       }
-
-      // Fullscreen handler
-      function toggleFullscreen(){
-        if (!viewportWrapper.classList.contains('fullscreen-active')) {
-          viewportWrapper.classList.add('fullscreen-active');
-          fullscreenBtn.setAttribute('title', 'Exit fullscreen');
-          fullscreenBtn.setAttribute('aria-label', 'Exit fullscreen');
-          fullscreenBtn.textContent = '⊡ Exit Fullscreen';
-          // Also attempt native fullscreen API if available
-          if (viewportWrapper.requestFullscreen) {
-            viewportWrapper.requestFullscreen().catch(err => console.log('Fullscreen request failed:', err));
-          } else if (viewportWrapper.webkitRequestFullscreen) {
-            viewportWrapper.webkitRequestFullscreen();
-          }
-        } else {
-          viewportWrapper.classList.remove('fullscreen-active');
-          fullscreenBtn.setAttribute('title', 'Enter fullscreen');
-          fullscreenBtn.setAttribute('aria-label', 'Enter fullscreen');
-          fullscreenBtn.textContent = '⛶ Fullscreen';
-          // Exit native fullscreen if active
-          if (document.fullscreenElement) {
-            if (document.exitFullscreen) {
-              document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-              document.webkitExitFullscreen();
-            }
-          }
-        }
-      }
-
-      // Listen for native fullscreen exit
-      document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement && viewportWrapper.classList.contains('fullscreen-active')) {
-          viewportWrapper.classList.remove('fullscreen-active');
-          fullscreenBtn.setAttribute('title', 'Enter fullscreen');
-          fullscreenBtn.setAttribute('aria-label', 'Enter fullscreen');
-          fullscreenBtn.textContent = '⛶ Fullscreen';
-        }
-      });
 
       // Wire up grid buttons (click & keyboard)
       grid.querySelectorAll('.game-directory-card').forEach(btn=>{
@@ -438,8 +393,8 @@
       const debouncedFilter = debounce(doFilter, 180);
       searchInput.addEventListener('input', debouncedFilter);
 
-      // Fullscreen button
-      fullscreenBtn.addEventListener('click', toggleFullscreen);
+      // Back button
+      backButton.addEventListener('click', closeRuntime);
 
       // brand click reloads the page list (simple reload)
       document.getElementById('brand').addEventListener('click', ()=>location.reload());
