@@ -188,14 +188,21 @@
     .meta-text-block h3{margin:0;font-size:13px}
     .meta-text-block p{margin:2px 0 0;font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:700}
     
-    .back-button{
+    .meta-actions{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-shrink:0;
+    }
+
+    .action-button{
       appearance:none;
       background:none;
       border:none;
       color:var(--text);
-      font-size:28px;
+      font-size:24px;
       cursor:pointer;
-      padding:4px 8px;
+      padding:4px 6px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -203,10 +210,10 @@
       user-select:none;
       flex-shrink:0;
     }
-    .back-button:hover{
+    .action-button:hover{
       transform:scale(1.1);
     }
-    .back-button:active{
+    .action-button:active{
       transform:scale(0.95);
     }
 
@@ -257,7 +264,7 @@
 <body>
   <header>
     <div class="header-left">
-      <div class="site-logo-brand" id="brand" role="button" tabindex="0" title="Reload game list">🍕 A game website</div>
+      <div class="site-logo-brand" id="brand" role="button" tabindex="0" title="Reload game list">A game website</div>
     </div>
 
     <div class="search-engine-box" role="search" aria-label="Search games">
@@ -281,7 +288,10 @@
               <p id="live-card-category">CATEGORY: LOCAL</p>
             </div>
           </div>
-          <button class="back-button" id="back-button" title="Back to game list" aria-label="Back to game list">➜</button>
+          <div class="meta-actions">
+            <button class="action-button" id="open-new-tab-button" title="Open in new tab" aria-label="Open in new tab">⧉</button>
+            <button class="action-button" id="back-button" title="Back to game list" aria-label="Back to game list">➜</button>
+          </div>
         </div>
       </div>
     </section>
@@ -335,9 +345,12 @@
       const liveTitle = document.getElementById('live-card-title');
       const liveEmoji = document.getElementById('live-card-emoji');
       const backButton = document.getElementById('back-button');
+      const openNewTabButton = document.getElementById('open-new-tab-button');
       const viewportWrapper = document.querySelector('.viewport-wrapper');
       const viewportStage = document.getElementById('viewport-stage');
       const gameListSection = document.getElementById('game-list-section');
+
+      let currentGameSrc = null;
 
       // Debounce helper
       function debounce(fn, wait){
@@ -367,6 +380,7 @@
         // update metadata
         liveTitle.textContent = titleName;
         liveEmoji.textContent = thumbnailGlyph || '🎮';
+        currentGameSrc = sourceUrl;
 
         // Show metadata drawer with back button
         metaDrawer.hidden = false;
@@ -387,9 +401,17 @@
         metaDrawer.setAttribute('aria-hidden','true');
         liveTitle.textContent = 'Game Core';
         liveEmoji.textContent = '🎮';
+        currentGameSrc = null;
         viewportStage.classList.remove('active');
         gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
+      }
+
+      // Open game in new tab
+      function openInNewTab(){
+        if (currentGameSrc) {
+          window.open(currentGameSrc, '_blank');
+        }
       }
 
       // Wire up grid buttons (click & keyboard)
@@ -418,6 +440,9 @@
 
       // Back button
       backButton.addEventListener('click', closeRuntime);
+
+      // Open in new tab button
+      openNewTabButton.addEventListener('click', openInNewTab);
 
       // brand click reloads the page list (simple reload)
       document.getElementById('brand').addEventListener('click', ()=>location.reload());
