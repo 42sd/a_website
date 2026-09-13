@@ -275,83 +275,6 @@
       <input id="directory-search-input" class="search-field-input" type="search" placeholder="Search games (title or category)" aria-label="Search games" />
     </div>
   </header>
-  <!-- MULTI-TAB ENGINE HUB: GAMES, DUCKDUCKGO, GOOGLE -->
-  <div style="max-width: 1060px; margin: 30px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
-      
-      <!-- Top Primary 3-Button Hub Switcher Menu -->
-      <div style="display: flex; gap: 12px; margin-bottom: 15px;">
-          <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🕹️ Games</button>
-          <button onclick="switchTabEngine('ddg-section-tab')" id="nav-btn-ddg" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🦆 DuckDuckGo</button>
-          <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🔍 Google Proxy</button>
-      </div>
-
-      <!-- PAGE CONTAINER MODULES -->
-      <div style="background-color: #161920; border: 1px solid #232733; border-radius: 12px; overflow: hidden; box-shadow: 0px 20px 45px rgba(0,0,0,0.6);">
-          
-          <!-- PAGE 1: DUCKDUCKGO UNBLOCKED STREAM PANEL -->
-          <div id="ddg-section-tab" class="hub-page-view-panel" style="display: none;">
-              <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #ff9f43; font-size: 14px;">🦆</span>
-                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">DuckDuckGo Local Portal</span>
-              </div>
-              <div style="height: 600px; background-color: #ffffff;">
-                  <iframe src="https://duckduckgo.com" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
-              </div>
-          </div>
-
-          <!-- PAGE 2: GOOGLE PROXY UNBLOCKED STREAM PANEL -->
-          <div id="google-section-tab" class="hub-page-view-panel" style="display: none;">
-              <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #4285f4; font-size: 14px;">🔍</span>
-                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">Google Proxy Portal Core</span>
-              </div>
-              <div style="height: 600px; background-color: #ffffff;">
-                  <!-- Routed through an open-source, framing-allowed search engine database mirror layout -->
-                  <iframe src="https://bing.com" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
-              </div>
-          </div>
-
-      </div>
-  </div>
-
-  <script>
-      // Tab Switching Core Engine Script Module
-      function switchTabEngine(targetTabId) {
-          // Hide both proxy frame containers first
-          document.getElementById('ddg-section-tab').style.display = 'none';
-          document.getElementById('google-section-tab').style.display = 'none';
-          
-          // Reference your game grid container element layout row
-          let activeGameGridSection = document.getElementById('game-list-section');
-
-          // Reset button styling layout frames back to muted defaults
-          document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
-          document.getElementById('nav-btn-games').style.color = '#9ba3b2';
-          document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
-          document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
-          document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
-          document.getElementById('nav-btn-google').style.color = '#9ba3b2';
-
-          if (targetTabId === 'games-section-tab') {
-              // Turn your beautiful 4-card game matrix dashboard view active
-              activeGameGridSection.style.display = '';
-              document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
-              document.getElementById('nav-btn-games').style.color = 'white';
-          } else {
-              // Hide games, show selected secure web portal engine view pane
-              activeGameGridSection.style.display = 'none';
-              document.getElementById(targetTabId).style.display = 'block';
-              
-              if (targetTabId === 'ddg-section-tab') {
-                  document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
-                  document.getElementById('nav-btn-ddg').style.color = 'white';
-              } else if (targetTabId === 'google-section-tab') {
-                  document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
-                  document.getElementById('nav-btn-google').style.color = 'white';
-              }
-          }
-      }
-  </script>
 
   <main>
     <section class="stage-viewport-area" id="viewport-stage">
@@ -376,36 +299,48 @@
     </section>
 
     <section id="game-list-section">
-      <div class="compendium-dashboard-matrix" id="directory-cards-grid" aria-live="polite">
-        <!-- Cards use data attributes and are wired up by JS -->
-        <button class="game-directory-card" data-src="./slope/index.html" data-title="Slope" data-category="Local Package" data-glyph="🔴" aria-label="Launch Slope">
-          <div class="game-card-thumbnail-box" aria-hidden="true">🔴</div>
-          <div class="game-directory-card-content">
-            <h3>Slope</h3>
-          </div>
-        </button>
-
-        <button class="game-directory-card" data-src="./drive-mad/index.html" data-title="Drive Mad" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Drive Mad">
-          <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
-          <div class="game-directory-card-content">
-            <h3>Drive Mad</h3>
-          </div>
-        </button>
-
-        <button class="game-directory-card" data-src="./polytrack/index.html" data-title="Polytrack" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Polytrack">
-          <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
-          <div class="game-directory-card-content">
-            <h3>Polytrack</h3>
-          </div>
-        </button>
-
-        <button class="game-directory-card" data-src="./level-devil/index.html" data-title="Level Devil" data-category="Local Package" data-glyph="😈" aria-label="Launch Level Devil">
-          <div class="game-card-thumbnail-box" aria-hidden="true">😈</div>
-          <div class="game-directory-card-content">
-            <h3>Level Devil</h3>
-          </div>
-        </button>
+      <div style="max-width: 1060px; margin: 30px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
         
+        <!-- Top Primary 3-Button Hub Switcher Menu -->
+        <div style="display: flex; gap: 12px; margin-bottom: 15px;">
+            <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">Games</button>
+            <button onclick="switchTabEngine('ddg-section-tab')" id="nav-btn-ddg" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">DuckDuckGo</button>
+            <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">Google</button>
+        </div>
+
+        <!-- Games Grid -->
+        <div id="games-section-tab" class="hub-page-view-panel">
+          <div class="compendium-dashboard-matrix" id="directory-cards-grid" aria-live="polite">
+            <!-- Cards use data attributes and are wired up by JS -->
+            <button class="game-directory-card" data-src="./slope/index.html" data-title="Slope" data-category="Local Package" data-glyph="🔴" aria-label="Launch Slope">
+              <div class="game-card-thumbnail-box" aria-hidden="true">🔴</div>
+              <div class="game-directory-card-content">
+                <h3>Slope</h3>
+              </div>
+            </button>
+
+            <button class="game-directory-card" data-src="./drive-mad/index.html" data-title="Drive Mad" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Drive Mad">
+              <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
+              <div class="game-directory-card-content">
+                <h3>Drive Mad</h3>
+              </div>
+            </button>
+
+            <button class="game-directory-card" data-src="./polytrack/index.html" data-title="Polytrack" data-category="Local Package" data-glyph="🏎️" aria-label="Launch Polytrack">
+              <div class="game-card-thumbnail-box" aria-hidden="true">🏎️</div>
+              <div class="game-directory-card-content">
+                <h3>Polytrack</h3>
+              </div>
+            </button>
+
+            <button class="game-directory-card" data-src="./level-devil/index.html" data-title="Level Devil" data-category="Local Package" data-glyph="😈" aria-label="Launch Level Devil">
+              <div class="game-card-thumbnail-box" aria-hidden="true">😈</div>
+              <div class="game-directory-card-content">
+                <h3>Level Devil</h3>
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -426,6 +361,7 @@
       const gameListSection = document.getElementById('game-list-section');
 
       let currentGameSrc = null;
+      let currentGameTitle = null;
 
       // Debounce helper
       function debounce(fn, wait){
@@ -456,6 +392,7 @@
         liveTitle.textContent = titleName;
         liveEmoji.textContent = thumbnailGlyph || '🎮';
         currentGameSrc = sourceUrl;
+        currentGameTitle = titleName;
 
         // Show metadata drawer with back button
         metaDrawer.hidden = false;
@@ -477,6 +414,7 @@
         liveTitle.textContent = 'Game Core';
         liveEmoji.textContent = '🎮';
         currentGameSrc = null;
+        currentGameTitle = null;
         viewportStage.classList.remove('active');
         gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
@@ -535,7 +473,43 @@
       document.getElementById('brand').addEventListener('keydown', (ev)=>{
         if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); location.reload(); }
       });
+
+      // Expose deployApplication and closeRuntime globally for tab switcher
+      window.deployApplication = deployApplication;
+      window.closeRuntime = closeRuntime;
     })();
+
+    // Tab Switching Core Engine Script Module
+    function switchTabEngine(targetTabId) {
+      const gameListSection = document.getElementById('game-list-section');
+      const gamesTab = document.getElementById('games-section-tab');
+
+      // Reset button styling layout frames back to muted defaults
+      document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
+      document.getElementById('nav-btn-games').style.color = '#9ba3b2';
+      document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
+      document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
+      document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
+      document.getElementById('nav-btn-google').style.color = '#9ba3b2';
+
+      if (targetTabId === 'games-section-tab') {
+        // Turn your beautiful 4-card game matrix dashboard view active
+        gamesTab.style.display = '';
+        document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
+        document.getElementById('nav-btn-games').style.color = 'white';
+        window.closeRuntime();
+      } else if (targetTabId === 'ddg-section-tab') {
+        gamesTab.style.display = 'none';
+        document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
+        document.getElementById('nav-btn-ddg').style.color = 'white';
+        window.deployApplication('https://duckduckgo.com', 'DuckDuckGo', '🦆');
+      } else if (targetTabId === 'google-section-tab') {
+        gamesTab.style.display = 'none';
+        document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
+        document.getElementById('nav-btn-google').style.color = 'white';
+        window.deployApplication('https://www.google.com', 'Google', '🔍');
+      }
+    }
   </script>
 </body>
 </html>
