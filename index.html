@@ -362,6 +362,7 @@
 
       let currentGameSrc = null;
       let currentGameTitle = null;
+      let isLocalGame = false; // Track if current item is a local game
 
       // Debounce helper
       function debounce(fn, wait){
@@ -373,7 +374,7 @@
       }
 
       // Deploy sandboxed iframe
-      function deployApplication(sourceUrl, titleName, thumbnailGlyph){
+      function deployApplication(sourceUrl, titleName, thumbnailGlyph, isGame = false){
         // create sandboxed iframe for safety
         const iframe = document.createElement('iframe');
         iframe.className = 'game-viewport';
@@ -393,6 +394,7 @@
         liveEmoji.textContent = thumbnailGlyph || '🎮';
         currentGameSrc = sourceUrl;
         currentGameTitle = titleName;
+        isLocalGame = isGame; // Only enable new tab button for local games
 
         // Show metadata drawer with back button
         metaDrawer.hidden = false;
@@ -415,14 +417,15 @@
         liveEmoji.textContent = '🎮';
         currentGameSrc = null;
         currentGameTitle = null;
+        isLocalGame = false;
         viewportStage.classList.remove('active');
         gameListSection.style.display = '';
         try { localStorage.removeItem('gamehub.last'); } catch(e){}
       }
 
-      // Open game in new tab
+      // Open game in new tab (only for local games)
       function openInNewTab(){
-        if (currentGameSrc) {
+        if (currentGameSrc && isLocalGame) {
           window.open(currentGameSrc, '_blank');
         }
       }
@@ -433,7 +436,7 @@
           const src = btn.getAttribute('data-src');
           const title = btn.getAttribute('data-title') || btn.querySelector('h3')?.innerText || 'Game';
           const glyph = btn.getAttribute('data-glyph') || '🎮';
-          deployApplication(src, title, glyph);
+          deployApplication(src, title, glyph, true); // Pass true for isGame
         });
         // space/enter already activate <button>, so additional keyboard handler not required
       });
@@ -465,7 +468,7 @@
         const last = JSON.parse(localStorage.getItem('gamehub.last') || 'null');
         if (last && last.src) {
           // Optionally auto-load last played — comment out if undesired
-          // deployApplication(last.src, last.title, last.glyph);
+          // deployApplication(last.src, last.title, last.glyph, true);
         }
       } catch(e){ /* ignore */ }
 
@@ -502,12 +505,12 @@
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
         document.getElementById('nav-btn-ddg').style.color = 'white';
-        window.deployApplication('https://duckduckgo.com', 'DuckDuckGo', '🦆');
+        window.deployApplication('https://duckduckgo.com', 'DuckDuckGo', '🦆', false); // Pass false for isGame
       } else if (targetTabId === 'google-section-tab') {
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
         document.getElementById('nav-btn-google').style.color = 'white';
-        window.deployApplication('https://www.google.com', 'Google', '🔍');
+        window.deployApplication('https://www.google.com', 'Google', '🔍', false); // Pass false for isGame
       }
     }
   </script>
