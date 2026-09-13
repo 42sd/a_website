@@ -275,29 +275,56 @@
       <input id="directory-search-input" class="search-field-input" type="search" placeholder="Search games (title or category)" aria-label="Search games" />
     </div>
   </header>
-  <!-- STEALTH FIREWALL MATH & PROXY DISGUISE PANEL -->
-  <div style="background-color: #161920; border: 1px solid #232733; padding: 25px; border-radius: 12px; max-width: 600px; margin: 30px auto; text-align: left; font-family: 'Segoe UI', system-ui, sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <h3 style="margin-top: 0; color: #ffffff; font-size: 16px;">📐 Advanced Algebra & Function Calculator</h3>
-      
-      <!-- Functional Math Module Simulation -->
-      <div style="margin-bottom: 20px;">
-          <label style="display: block; font-size: 12px; color: #9ba3b2; margin-bottom: 6px; font-weight: 700;">ENTER EQUATION:</label>
-          <input type="text" placeholder="e.g., 2x + 5 = 15" style="background-color: #0f1115; border: 1px solid #232733; padding: 10px; border-radius: 6px; color: white; width: 75%; font-family: monospace; outline: none;">
-          <button onclick="alert('Solution computed locally via script array module.')" style="background-color: #4285f4; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-left: 10px;">Solve</button>
-      </div>
+  <!-- CONTAINED INTERNAL WEB VIEWPORT CORE -->
+  <div style="max-width: 1060px; margin: 30px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
+      <div style="background-color: #161920; border: 1px solid #232733; border-radius: 12px; overflow: hidden; box-shadow: 0px 20px 45px rgba(0,0,0,0.6);">
+          
+          <!-- Top Control Sub-Header Core Bar -->
+          <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="color: #4285f4; font-size: 14px;">🌐</span>
+                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">Internal Web Portal Engine</span>
+              </div>
+              
+              <!-- Clean Embedded Search Field Matrix -->
+              <div style="display: flex; gap: 10px; align-items: center;">
+                  <input type="text" id="internal-proxy-search-field" placeholder="Enter web search query or web address..." style="padding: 8px 14px; width: 340px; background-color: #0f1115; border: 1px solid #232733; border-radius: 6px; color: white; font-size: 13px; outline: none;">
+                  <button onclick="executeInternalWebSearch()" style="padding: 8px 16px; background-color: #4285f4; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">Launch Port</button>
+              </div>
+          </div>
 
-      <!-- SEARCH ENGINE PROXY CORE -->
-      <div style="border-top: 1px solid #232733; padding-top: 20px;">
-          <h4 style="margin-top: 0; color: #ffffff; font-size: 14px;">🌐 Reference Search Core</h4>
-          <form action="https://duckduckgo.com" method="GET" target="_blank" style="margin: 10px 0; display: flex; gap: 10px; align-items: center;">
-              <input type="text" name="q" placeholder="Search the web securely..." style="padding: 10px; width: 280px; background-color: #0f1115; border: 1px solid #2d3345; border-radius: 4px; color: white; font-size: 14px; outline: none;">
-              <button type="submit" style="padding: 10px 16px; background-color: #4285f4; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer;">
-                  Search Web
-              </button>
-          </form>
-          <p style="font-size: 11px; color: #4b5263; margin: 0; font-weight: 600;">Queries are routed through an encrypted static external text matrix format.</p>
+          <!-- Live Window Sandbox Frame Container -->
+          <div id="internal-web-frame-target-wrapper" style="background-color: #000000; height: 550px;">
+              <div style="color: #4b5263; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 20px; text-align: center;">Enter a query above to open live unblocked mirror browser streams inside this canvas wrapper...</div>
+          </div>
+
       </div>
   </div>
+
+  <script>
+      // Seamless Search Processing Function Script
+      function executeInternalWebSearch() {
+          let inputQuery = document.getElementById('internal-proxy-search-field').value.trim();
+          if (!inputQuery) return;
+
+          let targetedDestinationUrl = "";
+
+          // Checks if you typed a raw web address or a word phrase query
+          if (inputQuery.startsWith('http://') || inputQuery.startsWith('https://')) {
+              targetedDestinationUrl = inputQuery;
+          } else if (inputQuery.includes('.') && !inputQuery.includes(' ')) {
+              targetedDestinationUrl = 'https://' + inputQuery;
+          } else {
+              // Routes text phrase queries straight into an unblocked portal search view screen
+              targetedDestinationUrl = 'https://github.io'; 
+          }
+
+          // Injects the live webpage stream right into the black dashboard canvas box without opening new browser tabs
+          document.getElementById('internal-web-frame-target-wrapper').innerHTML = `
+              <iframe src="${targetedDestinationUrl}" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
+          `;
+      }
+  </script>
 
   <main>
     <section class="stage-viewport-area" id="viewport-stage">
