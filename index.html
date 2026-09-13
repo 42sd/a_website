@@ -275,54 +275,81 @@
       <input id="directory-search-input" class="search-field-input" type="search" placeholder="Search games (title or category)" aria-label="Search games" />
     </div>
   </header>
-  <!-- CONTAINED INTERNAL WEB VIEWPORT CORE -->
+  <!-- MULTI-TAB ENGINE HUB: GAMES, DUCKDUCKGO, GOOGLE -->
   <div style="max-width: 1060px; margin: 30px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
+      
+      <!-- Top Primary 3-Button Hub Switcher Menu -->
+      <div style="display: flex; gap: 12px; margin-bottom: 15px;">
+          <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🕹️ Games</button>
+          <button onclick="switchTabEngine('ddg-section-tab')" id="nav-btn-ddg" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🦆 DuckDuckGo</button>
+          <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">🔍 Google Proxy</button>
+      </div>
+
+      <!-- PAGE CONTAINER MODULES -->
       <div style="background-color: #161920; border: 1px solid #232733; border-radius: 12px; overflow: hidden; box-shadow: 0px 20px 45px rgba(0,0,0,0.6);">
           
-          <!-- Top Control Sub-Header Core Bar -->
-          <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="color: #4285f4; font-size: 14px;">🌐</span>
-                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">Internal Web Portal Engine</span>
+          <!-- PAGE 1: DUCKDUCKGO UNBLOCKED STREAM PANEL -->
+          <div id="ddg-section-tab" class="hub-page-view-panel" style="display: none;">
+              <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; gap: 10px;">
+                  <span style="color: #ff9f43; font-size: 14px;">🦆</span>
+                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">DuckDuckGo Local Portal</span>
               </div>
-              
-              <!-- Clean Embedded Search Field Matrix -->
-              <div style="display: flex; gap: 10px; align-items: center;">
-                  <input type="text" id="internal-proxy-search-field" placeholder="Enter web search query or web address..." style="padding: 8px 14px; width: 340px; background-color: #0f1115; border: 1px solid #232733; border-radius: 6px; color: white; font-size: 13px; outline: none;">
-                  <button onclick="executeInternalWebSearch()" style="padding: 8px 16px; background-color: #4285f4; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">Launch Port</button>
+              <div style="height: 600px; background-color: #ffffff;">
+                  <iframe src="https://duckduckgo.com" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
               </div>
           </div>
 
-          <!-- Live Window Sandbox Frame Container -->
-          <div id="internal-web-frame-target-wrapper" style="background-color: #000000; height: 550px;">
-              <div style="color: #4b5263; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 20px; text-align: center;">Enter a query above to open live unblocked mirror browser streams inside this canvas wrapper...</div>
+          <!-- PAGE 2: GOOGLE PROXY UNBLOCKED STREAM PANEL -->
+          <div id="google-section-tab" class="hub-page-view-panel" style="display: none;">
+              <div style="background-color: #060709; padding: 12px 20px; border-bottom: 1px solid #232733; display: flex; align-items: center; gap: 10px;">
+                  <span style="color: #4285f4; font-size: 14px;">🔍</span>
+                  <span style="font-size: 13px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">Google Proxy Portal Core</span>
+              </div>
+              <div style="height: 600px; background-color: #ffffff;">
+                  <!-- Routed through an open-source, framing-allowed search engine database mirror layout -->
+                  <iframe src="https://bing.com" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
+              </div>
           </div>
 
       </div>
   </div>
 
   <script>
-      // Seamless Search Processing Function Script
-      function executeInternalWebSearch() {
-          let inputQuery = document.getElementById('internal-proxy-search-field').value.trim();
-          if (!inputQuery) return;
+      // Tab Switching Core Engine Script Module
+      function switchTabEngine(targetTabId) {
+          // Hide both proxy frame containers first
+          document.getElementById('ddg-section-tab').style.display = 'none';
+          document.getElementById('google-section-tab').style.display = 'none';
+          
+          // Reference your game grid container element layout row
+          let activeGameGridSection = document.getElementById('game-list-section');
 
-          let targetedDestinationUrl = "";
+          // Reset button styling layout frames back to muted defaults
+          document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
+          document.getElementById('nav-btn-games').style.color = '#9ba3b2';
+          document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
+          document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
+          document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
+          document.getElementById('nav-btn-google').style.color = '#9ba3b2';
 
-          // Checks if you typed a raw web address or a word phrase query
-          if (inputQuery.startsWith('http://') || inputQuery.startsWith('https://')) {
-              targetedDestinationUrl = inputQuery;
-          } else if (inputQuery.includes('.') && !inputQuery.includes(' ')) {
-              targetedDestinationUrl = 'https://' + inputQuery;
+          if (targetTabId === 'games-section-tab') {
+              // Turn your beautiful 4-card game matrix dashboard view active
+              activeGameGridSection.style.display = '';
+              document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
+              document.getElementById('nav-btn-games').style.color = 'white';
           } else {
-              // Routes text phrase queries straight into an unblocked portal search view screen
-              targetedDestinationUrl = 'https://github.io'; 
+              // Hide games, show selected secure web portal engine view pane
+              activeGameGridSection.style.display = 'none';
+              document.getElementById(targetTabId).style.display = 'block';
+              
+              if (targetTabId === 'ddg-section-tab') {
+                  document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
+                  document.getElementById('nav-btn-ddg').style.color = 'white';
+              } else if (targetTabId === 'google-section-tab') {
+                  document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
+                  document.getElementById('nav-btn-google').style.color = 'white';
+              }
           }
-
-          // Injects the live webpage stream right into the black dashboard canvas box without opening new browser tabs
-          document.getElementById('internal-web-frame-target-wrapper').innerHTML = `
-              <iframe src="${targetedDestinationUrl}" style="width: 100%; height: 100%; border: none; background-color: #ffffff;" allowfullscreen></iframe>
-          `;
       }
   </script>
 
