@@ -305,7 +305,7 @@
         <div style="display: flex; gap: 12px; margin-bottom: 15px;">
         <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🕹️ Games</button>
         <button onclick="switchTabEngine('ddg-section-tab')" id="nav-btn-ddg" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🦆 DuckDuckGo</button>
-        <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🔍 Google Proxy</button>
+        <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🌐 Google</button>
 
         </div>
 
@@ -504,7 +504,7 @@
     })();
 
     // Tab Switching Core Engine Script Module
-    function switchTabEngine(targetTabId) {
+function switchTabEngine(targetTabId) {
       const gameListSection = document.getElementById('game-list-section');
       const gamesTab = document.getElementById('games-section-tab');
 
