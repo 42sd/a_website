@@ -522,17 +522,17 @@ function switchTabEngine(targetTabId) {
         document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
         document.getElementById('nav-btn-games').style.color = 'white';
         window.closeRuntime();
-      } else if (targetTabId === 'ddg-section-tab') {
+    } else if (targetTabId === 'ddg-section-tab') {
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
         document.getElementById('nav-btn-ddg').style.color = 'white';
-        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/?', 'DuckDuckGo', '🦆', false);
+        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/static/', 'DuckDuckGo', '🦆', false);
     } else if (targetTabId === 'google-section-tab') {
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
         document.getElementById('nav-btn-google').style.color = 'white';
-        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/?', 'Google', '🌐', false);
-
+        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/static/', 'Google', '🌐', false);
+    }
   </script>
 </body>
 </html>
