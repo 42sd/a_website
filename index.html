@@ -503,20 +503,19 @@
       window.closeRuntime = closeRuntime;
     })();
 
-    // Tab Switching Core Engine Script Module
+// Tab Switching Core Engine Script Module
 function switchTabEngine(targetTabId) {
-      const gameListSection = document.getElementById('game-list-section');
-      const gamesTab = document.getElementById('games-section-tab');
+    const gamesTab = document.getElementById('games-section-tab');
 
-      // Reset button styling layout frames back to muted defaults
-      document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
-      document.getElementById('nav-btn-games').style.color = '#9ba3b2';
-      document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
-      document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
-      document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
-      document.getElementById('nav-btn-google').style.color = '#9ba3b2';
+    // Reset button styling layout frames back to muted defaults
+    document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
+    document.getElementById('nav-btn-games').style.color = '#9ba3b2';
+    document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
+    document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
+    document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
+    document.getElementById('nav-btn-google').style.color = '#9ba3b2';
 
-      if (targetTabId === 'games-section-tab') {
+    if (targetTabId === 'games-section-tab') {
         // Turn your beautiful 4-card game matrix dashboard view active
         gamesTab.style.display = '';
         document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
@@ -533,6 +532,8 @@ function switchTabEngine(targetTabId) {
         document.getElementById('nav-btn-google').style.color = 'white';
         window.deployApplication('https://ultraviolet-static-wheat.vercel.app/static/', 'Google', '🌐', false);
     }
-  </script>
+}
+</script>
 </body>
 </html>
+
