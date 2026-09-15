@@ -526,14 +526,13 @@ function switchTabEngine(targetTabId) {
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
         document.getElementById('nav-btn-ddg').style.color = 'white';
-        window.deployApplication('https://startpage.com', 'DuckDuckGo', '🦆', false); // Pass false for isGame
-      } else if (targetTabId === 'google-section-tab') {
+        window.deployApplication('https://ultraviolet-static-wheat.vercel.app', 'DuckDuckGo', '🦆', false);
+    } else if (targetTabId === 'google-section-tab') {
         gamesTab.style.display = 'none';
         document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
         document.getElementById('nav-btn-google').style.color = 'white';
-        window.deployApplication('https://ask.com', 'Google', '🌐', false);
-      }
-    }
+        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/?', 'Google', '🌐', false);
+
   </script>
 </body>
 </html>
