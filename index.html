@@ -305,13 +305,12 @@
     <section id="game-list-section">
       <div style="max-width: 1060px; margin: 30px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
         
-        <!-- Top Primary 3-Button Hub Switcher Menu -->
+        <!-- Top Primary 2-Button Hub Switcher Menu -->
         <div style="display: flex; gap: 12px; margin-bottom: 15px;">
-        <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🕹️ Games</button>
-        <button onclick="switchTabEngine('ddg-section-tab')" id="nav-btn-ddg" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🦆 DuckDuckGo</button>
-        <button onclick="switchTabEngine('google-section-tab')" id="nav-btn-google" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🌐 Google</button>
-
-        </div>
+         <button onclick="switchTabEngine('games-section-tab')" id="nav-btn-games" style="background-color: #4285f4; color: white; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🕹 Games</button>
+        <button onclick="switchTabEngine('uv-proxy-section-tab')" id="nav-btn-proxy" style="background-color: #232733; color: #9ba3b2; border: none; padding: 10px 22px; border-radius: 8px; font-weight: bold; cursor: pointer;">🌐 Web Proxy</button>
+    </div>
+      
 
         <!-- Games Grid -->
         <div id="games-section-tab" class="hub-page-view-panel">
@@ -514,27 +513,21 @@ function switchTabEngine(targetTabId) {
     // Reset button styling layout frames back to muted defaults
     document.getElementById('nav-btn-games').style.backgroundColor = '#232733';
     document.getElementById('nav-btn-games').style.color = '#9ba3b2';
-    document.getElementById('nav-btn-ddg').style.backgroundColor = '#232733';
-    document.getElementById('nav-btn-ddg').style.color = '#9ba3b2';
-    document.getElementById('nav-btn-google').style.backgroundColor = '#232733';
-    document.getElementById('nav-btn-google').style.color = '#9ba3b2';
+    document.getElementById('nav-btn-proxy').style.backgroundColor = '#232733';
+    document.getElementById('nav-btn-proxy').style.color = '#9ba3b2';
 
     if (targetTabId === 'games-section-tab') {
-        // Turn your beautiful 4-card game matrix dashboard view active
+        // Turn your beautiful game matrix dashboard view active
         gamesTab.style.display = '';
         document.getElementById('nav-btn-games').style.backgroundColor = '#4285f4';
         document.getElementById('nav-btn-games').style.color = 'white';
         window.closeRuntime();
-    } else if (targetTabId === 'ddg-section-tab') {
+    } else if (targetTabId === 'uv-proxy-section-tab') {
+        // Hide games list and load the live production proxy deployment container
         gamesTab.style.display = 'none';
-        document.getElementById('nav-btn-ddg').style.backgroundColor = '#ff9f43';
-        document.getElementById('nav-btn-ddg').style.color = 'white';
-        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/static/', 'DuckDuckGo', '🦆', false);
-    } else if (targetTabId === 'google-section-tab') {
-        gamesTab.style.display = 'none';
-        document.getElementById('nav-btn-google').style.backgroundColor = '#4285f4';
-        document.getElementById('nav-btn-google').style.color = 'white';
-        window.deployApplication('https://ultraviolet-static-wheat.vercel.app/static/', 'Google', '🌐', false);
+        document.getElementById('nav-btn-proxy').style.backgroundColor = '#4285f4';
+        document.getElementById('nav-btn-proxy').style.color = 'white';
+        window.deployApplication('https://vercel.app', 'Web Proxy', '🌐', false);
     }
 }
 </script>
