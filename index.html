@@ -18,15 +18,16 @@
       --max-width:1200px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0}
     body{
       font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
       color:var(--text);
-      background: url('space.jpg');
-     background-size: cover;
-     background-position: center;
-     background-attachment: fixed;
+      /* Fallback background color so it turns dark instead of white if the image lags */
+      background-color: #05060a; 
+      background-image: url('Space.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       display:flex;
